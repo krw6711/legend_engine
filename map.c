@@ -44,6 +44,8 @@ int load_map_sprite(void){
         SDL_Log("Couldn't create static texture: %s", SDL_GetError());
         return 1;
     }
+    
+    return 0;
 }
 
 void map_draw(void){

@@ -1,6 +1,4 @@
 #include "cleanup.h"
-#include "SDL3/SDL_audio.h"
-#include "SDL3/SDL_render.h"
 #include "globals.h"
 #include "map.h"
 
@@ -16,10 +14,11 @@ int clean_heaps(void){
     music = NULL;
     sfx = NULL;
 
+    SDL_CloseJoystick(joystick);
     joystick = NULL;
 
     // Free Map
-    for(int i = 0; i <= MAP_ROWS; i++){
+    for(int i = 0; i < MAP_ROWS; i++){
         free(map_info[i]);
         map_info[i] = NULL;
     }
