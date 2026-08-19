@@ -1,3 +1,5 @@
+#include "SDL3/SDL_log.h"
+#include "cleanup.h"
 #define SDL_MAIN_USE_CALLBACKS 1  /* use the callbacks instead of main() */
 #include <SDL3/SDL_main.h>
 
@@ -45,6 +47,10 @@ void SDL_AppQuit(void *appstate, SDL_AppResult result)
     SDL_DestroyRenderer(renderer);
     window = NULL;
     renderer = NULL;
+
+    if(clean_heaps()){
+        SDL_Log("Error in freeing up memory, happy memory leak!");
+    }
 
     /* SDL will clean up the window/renderer for us. */
 }

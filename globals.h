@@ -3,8 +3,10 @@
 
 #include <SDL3/SDL.h>
 
-#define MAP_COLS 5
-#define MAP_ROWS 15
+#include "cleanup.h"
+
+#define MAP_COLS 20
+#define MAP_ROWS 10
 #define MAP_CELL_SIZE 50
 
 #define WINDOW_WIDTH MAP_COLS * MAP_CELL_SIZE
