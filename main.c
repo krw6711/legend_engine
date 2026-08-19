@@ -47,11 +47,6 @@ SDL_AppResult SDL_AppIterate(void *appstate)
 
 void SDL_AppQuit(void *appstate, SDL_AppResult result)
 {
-    SDL_DestroyWindow(window);
-    SDL_DestroyRenderer(renderer);
-    window = NULL;
-    renderer = NULL;
-
     if(clean_heaps()){
         SDL_Log("Error in freeing up memory, happy memory leak!");
     }

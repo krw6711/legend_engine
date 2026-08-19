@@ -1,8 +1,6 @@
 # UNDERCONSTRUCTION
 to run this use
 ```sh
-git clone https://github.com/libsdl-org/SDL.git vendored/SDL
-git clone https://github.com/libsdl-org/SDL_mixer vendored/SDL_mixer
 cmake -S . -B build && cmake --build build && ./build/main
 ```
 
