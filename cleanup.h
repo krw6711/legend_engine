@@ -1,10 +1,6 @@
 #ifndef CLEANUP_H
 #define CLEANUP_H
 
-int clean_heaps(){
-
-    
-    return 0;
-}
+int clean_heaps(void);
 
 #endif

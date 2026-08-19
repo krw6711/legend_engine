@@ -3,8 +3,6 @@
 
 #include <SDL3/SDL.h>
 
-#include "cleanup.h"
-
 #define MAP_COLS 20
 #define MAP_ROWS 10
 #define MAP_CELL_SIZE 50
@@ -16,10 +14,10 @@
 #define APP_ID "com.legend.engine.2d"
 #define APP_VERSION "0.1"
 
-static SDL_Window *window = NULL;
-static SDL_Renderer *renderer = NULL;
-static SDL_Joystick *joystick = NULL;
-static SDL_AudioStream *music = NULL;
-static SDL_AudioStream *sfx = NULL;
+extern SDL_Window *window;
+extern SDL_Renderer *renderer;
+extern SDL_Joystick *joystick;
+extern SDL_AudioStream *music;
+extern SDL_AudioStream *sfx;
 
 #endif 
