@@ -55,14 +55,14 @@ void map_draw(void){
 
             if( i == 0 || i == MAP_ROWS - 1 || j == 0 || j == MAP_COLS -1 ){
                 map_info[i][j] = (Map_cell_ground){
-                    .sprite = {25*16, 0, 16, 16},
+                    .sprite = {14*32, 0, 32, 32},
                     .tile = {j*50, i*50, 50, 50},
                     .x = j,
                     .y = i
                 };
             }else{
                 map_info[i][j] = (Map_cell_ground){
-                    .sprite = {40*16, 0, 16, 16},
+                    .sprite = {20*32, 0, 32, 32},
                     .tile = {j*50, i*50, 50, 50},
                     .x = j,
                     .y = i
