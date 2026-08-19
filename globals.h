@@ -6,6 +6,8 @@
 #define MAP_COLS 20
 #define MAP_ROWS 10
 #define MAP_CELL_SIZE 50
+#define MAP_SPRITE_FILE "%sassets/map.png"
+#define MAP_SPRITE_SIZE 16
 
 #define WINDOW_WIDTH MAP_COLS * MAP_CELL_SIZE
 #define WINDOW_HEIGHT MAP_ROWS * MAP_CELL_SIZE

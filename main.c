@@ -40,6 +40,8 @@ SDL_AppResult SDL_AppIterate(void *appstate)
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE); // make a black-gray background
     SDL_RenderClear(renderer); // clear the canvas
 
+    map_render();
+
     SDL_RenderPresent(renderer);
 
     return SDL_APP_CONTINUE;  /* carry on with the program! */

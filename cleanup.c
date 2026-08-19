@@ -1,5 +1,6 @@
 #include "cleanup.h"
 #include "SDL3/SDL_audio.h"
+#include "SDL3/SDL_render.h"
 #include "globals.h"
 #include "map.h"
 
@@ -24,6 +25,9 @@ int clean_heaps(void){
     }
     free(map_info);
     map_info = NULL;
+
+    SDL_DestroyTexture(map_texture);
+    map_texture = NULL;
 
     return 0;
 }
