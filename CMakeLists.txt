@@ -15,23 +15,25 @@ FetchContent_Declare(
   SOURCE_DIR     "${CMAKE_CURRENT_LIST_DIR}/vendored/SDL_mixer"
 )
 
-FetchContent_MakeAvailable(SDL3_SRC)
-FetchContent_MakeAvailable(SDL3_MIXER)
+set(FETCHCONTENT_QUIET OFF)
+FetchContent_MakeAvailable(
+    SDL3_SRC
+    SDL3_MIXER
+)
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/$<CONFIGURATION>")
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/$<CONFIGURATION>")
-
-# This assumes the SDL source is available in vendored/SDL
-add_subdirectory(vendored/SDL EXCLUDE_FROM_ALL)
-
-# add_subdirectory(vendored/SDL_mixer EXCLUDE_FROM_ALL)
-add_subdirectory(vendored/SDL_mixer EXCLUDE_FROM_ALL)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")
 
 # Create your game executable target as usual
-add_executable(main WIN32 main.c cleanup.c globals.c map.c)
+add_executable(main
+    main.c
+    cleanup.c
+    globals.c
+    map.c
+)
+target_link_libraries(main PRIVATE 
+    SDL3::SDL3
+    # SDL3_mixer::SDL3_mixer
+)
 
-# Link to the actual SDL3 library.
-# SDL3_mixer::SDL3_mixer
-target_link_libraries(main PRIVATE SDL3::SDL3)
-
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/assets/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/assets/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
