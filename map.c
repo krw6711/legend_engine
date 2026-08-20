@@ -86,7 +86,9 @@ void map_draw(void){
 
 int map_render(void){
     for(int i = 0; i < MAP_ROWS ; i++){
+        // if((i * MAP_CELL_SIZE) > WINDOW_HEIGHT){break;}
         for(int j = 0; j < MAP_COLS; j++){
+            // if((j * MAP_CELL_SIZE) > WINDOW_WIDTH){break;}
             SDL_RenderTexture(renderer, map_texture, &map_info[i][j].sprite, &map_info[i][j].tile);
         }
     }
