@@ -4,8 +4,10 @@
 Map_cell_ground **map_info = NULL;
 SDL_Texture *map_texture = NULL;
 SDL_Texture *map_frame =  NULL;
-// initialize map array
 
+Camera_t camera = {0,0};
+
+// initialize map array
 int map_mem_init(void){
     map_info = malloc(MAP_ROWS * sizeof(Map_cell_ground *));
     if(!map_info){
@@ -74,17 +76,30 @@ void map_load(void){
                     .y = i
                 };
             }
+
+            // SDL_Log("loaded %d %d", j, i);
         }
     }
-    // return 0;
 }
 
 int map_render(void){
-    for(int i = 0; i < MAP_ROWS ; i++){
-        // if((i * MAP_CELL_SIZE) > WINDOW_HEIGHT){break;}
-        for(int j = 0; j < MAP_COLS; j++){
-            // if((j * MAP_CELL_SIZE) > WINDOW_WIDTH){break;}
-            SDL_RenderTexture(renderer, map_texture, &map_info[i][j].sprite, &map_info[i][j].tile);
+    SDL_FRect screen_position;
+
+    int start_x = abs(camera.x / MAP_CELL_SIZE);
+    int start_y = abs(camera.y/MAP_CELL_SIZE);
+
+    int end_x = start_x + (WINDOW_WIDTH/MAP_CELL_SIZE);
+    int end_y = start_y + (WINDOW_HEIGHT/MAP_CELL_SIZE);
+
+    for(int i = start_y; i < end_y ; i++){
+        for(int j = start_x; j < end_x; j++){
+            screen_position = (SDL_FRect){
+                .x = map_info[i][j].tile.x + camera.x,
+                .y = map_info[i][j].tile.y + camera.y,
+                .h = map_info[i][j].tile.h,
+                .w = map_info[i][j].tile.w
+            };
+            SDL_RenderTexture(renderer, map_texture, &map_info[i][j].sprite, &screen_position);
         }
     }
     return 0;

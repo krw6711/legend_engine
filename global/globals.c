@@ -6,4 +6,4 @@ SDL_Joystick *joystick = NULL;
 SDL_AudioStream *music = NULL;
 SDL_AudioStream *sfx = NULL;
 
-SDL_Rect camera = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
+// SDL_Rect camera = {-50, -50, WINDOW_WIDTH, WINDOW_HEIGHT};

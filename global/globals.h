@@ -22,6 +22,6 @@ extern SDL_Renderer *renderer;
 extern SDL_Joystick *joystick;
 extern SDL_AudioStream *music;
 extern SDL_AudioStream *sfx;
-extern SDL_Rect camera;
+// extern SDL_Rect camera;
 
 #endif 
