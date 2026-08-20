@@ -1,9 +1,6 @@
 #ifndef MAP_H
 #define MAP_H
 #include "../global/globals.h"
-#include <stdbool.h>
-#include <stdlib.h>
-#include <math.h>
 
 typedef struct {
     SDL_FRect sprite;
@@ -14,8 +11,8 @@ typedef struct {
 } Map_cell_ground;
 
 typedef struct {
-    int x;
-    int y;
+    float x, y;
+    Uint64 last_time;
 } Camera_t;
 
 extern Map_cell_ground **map_info;

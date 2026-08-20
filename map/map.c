@@ -1,4 +1,5 @@
 #include "map.h"
+#include <stdlib.h>
 
 // Make a large array for map meta info to access later
 Map_cell_ground **map_info = NULL;
@@ -85,8 +86,8 @@ void map_load(void){
 int map_render(void){
     SDL_FRect screen_position;
 
-    int start_x = abs(camera.x / MAP_CELL_SIZE);
-    int start_y = abs(camera.y/MAP_CELL_SIZE);
+    int start_x = (-camera.x / MAP_CELL_SIZE);
+    int start_y = (-camera.y/MAP_CELL_SIZE);
 
     int end_x = start_x + (WINDOW_WIDTH/MAP_CELL_SIZE);
     int end_y = start_y + (WINDOW_HEIGHT/MAP_CELL_SIZE);

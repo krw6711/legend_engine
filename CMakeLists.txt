@@ -16,6 +16,7 @@ add_executable(main WIN32
     ./global/globals.c 
     ./map/map.c
     ./physics/velocity.c
+    ./global/iterate_event.c
 )
 
 # Link to the actual SDL3 library.

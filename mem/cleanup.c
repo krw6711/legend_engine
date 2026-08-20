@@ -1,4 +1,7 @@
 #include "cleanup.h"
+#include "../global/globals.h"
+#include "../map/map.h"
+#include <stdlib.h>
 
 int clean_heaps(void){
     // Free SDL Stuff
