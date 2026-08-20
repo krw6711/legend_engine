@@ -1,14 +1,9 @@
 #include "map.h"
-#include "globals.h"
-#include <SDL3/SDL_error.h>
-#include <SDL3/SDL_log.h>
-#include <SDL3/SDL_render.h>
 
 // Make a large array for map meta info to access later
 Map_cell_ground **map_info = NULL;
 SDL_Texture *map_texture = NULL;
 SDL_Texture *map_frame =  NULL;
-Camera_t camera = {0};
 // initialize map array
 
 int map_mem_init(void){
@@ -52,29 +47,29 @@ int load_map_sprite(void){
     return 0;
 }
 
-void map_draw(void){
+void map_load(void){
     // 14 20 21
     for(int i = 0; i < MAP_ROWS; i++){
         for(int j = 0; j < MAP_COLS; j++){
 
             if( i == 0 || i == MAP_ROWS - 1 || j == 0 || j == MAP_COLS -1 ){
                 map_info[i][j] = (Map_cell_ground){
-                    .sprite = {1*32, 7*32, 32, 32},
-                    .tile = {(j + camera.x)*50, (i + camera.y)*50, 50, 50},
+                    .sprite = {1*MAP_SPRITE_SIZE, 7*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
+                    .tile = {(j)*MAP_CELL_SIZE, (i)*MAP_CELL_SIZE, MAP_CELL_SIZE, MAP_CELL_SIZE},
                     .x = j,
                     .y = i
                 };
             }else if(i % 3 == 0 && j % 3 == 0){
                 map_info[i][j] = (Map_cell_ground){
-                    .sprite = {15*32, 1*32, 32, 32},
-                    .tile = {(j + camera.x)*50, (i + camera.y)*50, 50, 50},
+                    .sprite = {15*MAP_SPRITE_SIZE, 1*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
+                    .tile = {(j)*MAP_CELL_SIZE, (i)*MAP_CELL_SIZE, MAP_CELL_SIZE, MAP_CELL_SIZE},
                     .x = j,
                     .y = i
                 };
             }else{
                 map_info[i][j] = (Map_cell_ground){
-                    .sprite = {13*32, 0, 32, 32},
-                    .tile = {(j + camera.x)*50, (i + camera.y)*50, 50, 50},
+                    .sprite = {13*MAP_SPRITE_SIZE, 0*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
+                    .tile = {(j)*MAP_CELL_SIZE, (i)*MAP_CELL_SIZE, MAP_CELL_SIZE, MAP_CELL_SIZE},
                     .x = j,
                     .y = i
                 };
@@ -99,7 +94,7 @@ int map_init(void){
     if(map_mem_init() || load_map_sprite()){
         return 1;
     }
-    map_draw();
+    map_load();
 
     return 0;
 }

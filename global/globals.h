@@ -7,7 +7,7 @@
 #define MAP_ROWS 20
 #define MAP_CELL_SIZE 50
 #define MAP_SPRITE_FILE "%sassets/map.png"
-#define MAP_SPRITE_SIZE 16
+#define MAP_SPRITE_SIZE 32
 
 #define WINDOW_WIDTH ((MAP_COLS - 5) * MAP_CELL_SIZE)
 #define WINDOW_HEIGHT ((MAP_ROWS - 5) * MAP_CELL_SIZE)
@@ -22,5 +22,6 @@ extern SDL_Renderer *renderer;
 extern SDL_Joystick *joystick;
 extern SDL_AudioStream *music;
 extern SDL_AudioStream *sfx;
+extern SDL_Rect camera;
 
 #endif 
