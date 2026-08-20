@@ -4,17 +4,15 @@
 
 int clean_heaps(void){
     // Free SDL Stuff
-    SDL_DestroyWindow(window);
-    SDL_DestroyRenderer(renderer);
-    window = NULL;
-    renderer = NULL;
-
-    SDL_DestroyAudioStream(music);
-    SDL_DestroyAudioStream(sfx);
+    if(music){
+        SDL_DestroyAudioStream(music);
+    }
+    if(sfx) SDL_DestroyAudioStream(sfx);
+    
     music = NULL;
     sfx = NULL;
 
-    SDL_CloseJoystick(joystick);
+    if(joystick) SDL_CloseJoystick(joystick);
     joystick = NULL;
 
     // Free Map
@@ -25,8 +23,13 @@ int clean_heaps(void){
     free(map_info);
     map_info = NULL;
 
-    SDL_DestroyTexture(map_texture);
+    if(map_texture) SDL_DestroyTexture(map_texture);
     map_texture = NULL;
+
+    if(window) SDL_DestroyWindow(window);
+    if(renderer) SDL_DestroyRenderer(renderer);
+    window = NULL;
+    renderer = NULL;
 
     return 0;
 }

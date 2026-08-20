@@ -14,7 +14,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
         return SDL_APP_FAILURE;
     }
 
-    if (!SDL_CreateWindowAndRenderer("Velocity", WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_RESIZABLE, &window, &renderer)) {
+    if (!SDL_CreateWindowAndRenderer(WINDOW_TITLE, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_RESIZABLE, &window, &renderer)) {
         SDL_Log("Couldn't create window/renderer: %s", SDL_GetError());
         return SDL_APP_FAILURE;
     }
@@ -33,6 +33,25 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
 {
     if (event->type == SDL_EVENT_QUIT) {
         return SDL_APP_SUCCESS;  /* end the program, reporting success to the OS. */
+    }
+    if (event->type == SDL_EVENT_KEY_DOWN) {
+        if (event->key.key == SDLK_UP){
+            camera.y++;
+            map_draw();
+        }
+        if (event->key.key == SDLK_DOWN)
+        {
+            camera.y--;
+            map_draw();
+        }
+        if (event->key.key == SDLK_RIGHT){
+            camera.x--;
+            map_draw();
+        }
+        if (event->key.key == SDLK_LEFT){
+            camera.x++;
+            map_draw();
+        }
     }
     return SDL_APP_CONTINUE;  /* carry on with the program! */
 }

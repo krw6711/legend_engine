@@ -3,15 +3,16 @@
 
 #include <SDL3/SDL.h>
 
-#define MAP_COLS 20
-#define MAP_ROWS 10
+#define MAP_COLS 30
+#define MAP_ROWS 20
 #define MAP_CELL_SIZE 50
 #define MAP_SPRITE_FILE "%sassets/map.png"
 #define MAP_SPRITE_SIZE 16
 
-#define WINDOW_WIDTH MAP_COLS * MAP_CELL_SIZE
-#define WINDOW_HEIGHT MAP_ROWS * MAP_CELL_SIZE
+#define WINDOW_WIDTH ((MAP_COLS - 5) * MAP_CELL_SIZE)
+#define WINDOW_HEIGHT ((MAP_ROWS - 5) * MAP_CELL_SIZE)
 
+#define WINDOW_TITLE "The Legend 2D Engine"
 #define APP_NAME "The Legend Engine"
 #define APP_ID "com.legend.engine.2d"
 #define APP_VERSION "0.1"

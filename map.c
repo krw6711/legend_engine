@@ -1,10 +1,14 @@
 #include "map.h"
 #include "globals.h"
+#include <SDL3/SDL_error.h>
+#include <SDL3/SDL_log.h>
+#include <SDL3/SDL_render.h>
 
 // Make a large array for map meta info to access later
 Map_cell_ground **map_info = NULL;
 SDL_Texture *map_texture = NULL;
-
+SDL_Texture *map_frame =  NULL;
+Camera_t camera = {0};
 // initialize map array
 
 int map_mem_init(void){
@@ -55,15 +59,22 @@ void map_draw(void){
 
             if( i == 0 || i == MAP_ROWS - 1 || j == 0 || j == MAP_COLS -1 ){
                 map_info[i][j] = (Map_cell_ground){
-                    .sprite = {14*32, 0, 32, 32},
-                    .tile = {j*50, i*50, 50, 50},
+                    .sprite = {1*32, 7*32, 32, 32},
+                    .tile = {(j + camera.x)*50, (i + camera.y)*50, 50, 50},
+                    .x = j,
+                    .y = i
+                };
+            }else if(i % 3 == 0 && j % 3 == 0){
+                map_info[i][j] = (Map_cell_ground){
+                    .sprite = {15*32, 1*32, 32, 32},
+                    .tile = {(j + camera.x)*50, (i + camera.y)*50, 50, 50},
                     .x = j,
                     .y = i
                 };
             }else{
                 map_info[i][j] = (Map_cell_ground){
-                    .sprite = {20*32, 0, 32, 32},
-                    .tile = {j*50, i*50, 50, 50},
+                    .sprite = {13*32, 0, 32, 32},
+                    .tile = {(j + camera.x)*50, (i + camera.y)*50, 50, 50},
                     .x = j,
                     .y = i
                 };
@@ -73,12 +84,13 @@ void map_draw(void){
     // return 0;
 }
 
-void map_render(void){
-    for(int i = 0; i < MAP_ROWS; i++){
+int map_render(void){
+    for(int i = 0; i < MAP_ROWS ; i++){
         for(int j = 0; j < MAP_COLS; j++){
             SDL_RenderTexture(renderer, map_texture, &map_info[i][j].sprite, &map_info[i][j].tile);
         }
     }
+    return 0;
 }
 
 int map_init(void){
