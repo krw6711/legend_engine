@@ -12,9 +12,10 @@ add_subdirectory(vendored/SDL EXCLUDE_FROM_ALL)
 # Create your game executable target as usual
 add_executable(main WIN32 
     main.c 
-    cleanup.c 
-    globals.c 
-    map.c
+    ./mem/cleanup.c 
+    ./global/globals.c 
+    ./map/map.c
+    ./physics/velocity.c
 )
 
 # Link to the actual SDL3 library.

@@ -35,22 +35,19 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
         return SDL_APP_SUCCESS;  /* end the program, reporting success to the OS. */
     }
     if (event->type == SDL_EVENT_KEY_DOWN) {
+        // camera moving events
         if (event->key.key == SDLK_UP){
             camera.y++;
-            // map_load();
         }
         if (event->key.key == SDLK_DOWN)
         {
             camera.y--;
-            // map_load();
         }
         if (event->key.key == SDLK_RIGHT){
             camera.x--;
-            // map_load();
         }
         if (event->key.key == SDLK_LEFT){
             camera.x++;
-            // map_load();
         }
     }
     return SDL_APP_CONTINUE;  /* carry on with the program! */
@@ -58,11 +55,16 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
 
 SDL_AppResult SDL_AppIterate(void *appstate)
 {
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE); // make a black-gray background
+    SDL_SetRenderDrawColor(renderer, 60, 60, 60, SDL_ALPHA_OPAQUE); // make a black-gray background
     SDL_RenderClear(renderer); // clear the canvas
+    
+    // camera coordinates
     SDL_SetRenderViewport(renderer, &camera);
+
+    // render the built map
     map_render();
 
+    // output on the screen
     SDL_RenderPresent(renderer);
 
     return SDL_APP_CONTINUE;  /* carry on with the program! */
