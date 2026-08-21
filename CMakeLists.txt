@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.16)
 project(TheLegendEngine2D)
 
+# include(CTest)
+# find_program(MEMORYCHECK_COMMAND valgrind)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/$<CONFIGURATION>")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/$<CONFIGURATION>")
@@ -18,6 +20,9 @@ add_executable(main WIN32
     ./physics/velocity.c
     ./global/iterate_event.c
 )
+
+# target_compile_options(main PRIVATE -fsanitize=address -g)
+# target_link_options(main PRIVATE -fsanitize=address)
 
 # Link to the actual SDL3 library.
 # SDL3_mixer::SDL3_mixer

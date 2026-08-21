@@ -1,12 +1,13 @@
 #include "map.h"
 #include <stdlib.h>
+#include <math.h>
 
 // Make a large array for map meta info to access later
 Map_cell_ground **map_info = NULL;
 SDL_Texture *map_texture = NULL;
 SDL_Texture *map_frame =  NULL;
 
-Camera_t camera = {0,0};
+Object_t camera = {.x=0,.y=0};
 
 // initialize map array
 int map_mem_init(void){
@@ -86,8 +87,8 @@ void map_load(void){
 int map_render(void){
     SDL_FRect screen_position;
 
-    int start_x = (-camera.x / MAP_CELL_SIZE);
-    int start_y = (-camera.y/MAP_CELL_SIZE);
+    int start_x = ((int)-camera.x / MAP_CELL_SIZE);
+    int start_y = ((int)-camera.y/MAP_CELL_SIZE);
 
     int end_x = start_x + (WINDOW_WIDTH/MAP_CELL_SIZE);
     int end_y = start_y + (WINDOW_HEIGHT/MAP_CELL_SIZE);

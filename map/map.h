@@ -2,6 +2,8 @@
 #define MAP_H
 #include "../global/globals.h"
 
+#include <stdbool.h>
+
 typedef struct {
     SDL_FRect sprite;
     SDL_FRect tile;
@@ -10,15 +12,27 @@ typedef struct {
     // bool ground;
 } Map_cell_ground;
 
+typedef enum {UP, DOWN, RIGHT, LEFT} Face_t;
+
 typedef struct {
+   Face_t face;
+   Uint64 last_time;
+   float target;
+   float velocity;
+   bool moving; 
+} Moving_t;
+
+typedef struct {
+    Moving_t move;
     float x, y;
-    Uint64 last_time;
-} Camera_t;
+} Object_t;
+
+
 
 extern Map_cell_ground **map_info;
 extern SDL_Texture *map_texture;
 extern SDL_Texture *map_frame;
-extern Camera_t camera;
+extern Object_t camera;
 
 int map_init(void);
 int map_mem_init(void);

@@ -77,7 +77,8 @@ SDL_AppResult SDL_AppIterate(void *appstate)
     // do_move(&camera.y, camera.y + MAP_CELL_SIZE , MAP_CELL_SIZE, 0.5, &camera.last_time);
 
     joystick_iterate_event();
-
+    moving_items();
+    
     SDL_SetRenderDrawColor(renderer, 60, 60, 60, SDL_ALPHA_OPAQUE); // make a black-gray background
     SDL_RenderClear(renderer); // clear the canvas
     

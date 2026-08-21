@@ -2,5 +2,6 @@
 #define ITERATE_EVENT_H
 
 void joystick_iterate_event(void);
+void moving_items(void);
 
 #endif
