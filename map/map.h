@@ -15,6 +15,11 @@ typedef struct {
 typedef enum {UP, DOWN, RIGHT, LEFT} Face_t;
 
 typedef struct {
+   float start_x, start_y;
+   float end_x, end_y;
+} Collusion_Informtion_t;
+
+typedef struct {
    Face_t face;
    Uint64 last_time;
    float target;
@@ -24,10 +29,9 @@ typedef struct {
 
 typedef struct {
     Moving_t move;
+    Collusion_Informtion_t border;
     float x, y;
 } Object_t;
-
-
 
 extern Map_cell_ground **map_info;
 extern SDL_Texture *map_texture;

@@ -7,7 +7,7 @@ Map_cell_ground **map_info = NULL;
 SDL_Texture *map_texture = NULL;
 SDL_Texture *map_frame =  NULL;
 
-Object_t camera = {.x=0,.y=0};
+Object_t camera = {.x=0,.y=0, .border={0, 0, -(MAP_CELL_SIZE*MAP_COLS) - WINDOW_WIDTH, -(MAP_ROWS*MAP_CELL_SIZE) - WINDOW_HEIGHT}};
 
 // initialize map array
 int map_mem_init(void){
@@ -72,7 +72,7 @@ void map_load(void){
                 };
             }else{
                 map_info[i][j] = (Map_cell_ground){
-                    .sprite = {13*MAP_SPRITE_SIZE, 0*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
+                    .sprite = {13*MAP_SPRITE_SIZE, 9*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
                     .tile = {(j)*MAP_CELL_SIZE, (i)*MAP_CELL_SIZE, MAP_CELL_SIZE, MAP_CELL_SIZE},
                     .x = j,
                     .y = i
