@@ -17,6 +17,7 @@ add_executable(main WIN32
     ./mem/cleanup.c 
     ./global/globals.c 
     ./map/map.c
+    ./map/camera.c
     ./physics/velocity.c
     ./global/iterate_event.c
 )

@@ -21,7 +21,7 @@ typedef struct {
 
 typedef struct {
    Face_t face;
-   Uint64 last_time;
+   float last_time;
    float target;
    float velocity;
    bool moving; 
@@ -36,7 +36,7 @@ typedef struct {
 extern Map_cell_ground **map_info;
 extern SDL_Texture *map_texture;
 extern SDL_Texture *map_frame;
-extern Object_t camera;
+// extern Object_t camera;
 
 int map_init(void);
 int map_mem_init(void);

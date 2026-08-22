@@ -1,13 +1,14 @@
 #include "map.h"
 #include <stdlib.h>
-#include <math.h>
+#include "SDL3/SDL_log.h"
+#include "camera.h"
 
 // Make a large array for map meta info to access later
 Map_cell_ground **map_info = NULL;
 SDL_Texture *map_texture = NULL;
 SDL_Texture *map_frame =  NULL;
 
-Object_t camera = {.x=0,.y=0, .border={0, 0, -(MAP_CELL_SIZE*MAP_COLS) - WINDOW_WIDTH, -(MAP_ROWS*MAP_CELL_SIZE) - WINDOW_HEIGHT}};
+// Object_t camera = {.x=0,.y=0, .border={0, 0, -(MAP_CELL_SIZE*MAP_COLS) - WINDOW_WIDTH, -(MAP_ROWS*MAP_CELL_SIZE) - WINDOW_HEIGHT}};
 
 // initialize map array
 int map_mem_init(void){
@@ -87,17 +88,22 @@ void map_load(void){
 int map_render(void){
     SDL_FRect screen_position;
 
-    int start_x = ((int)-camera.x / MAP_CELL_SIZE);
-    int start_y = ((int)-camera.y/MAP_CELL_SIZE);
+    int start_x = (int)camera.c_x;
+    int start_y = (int)camera.c_y; 
 
-    int end_x = start_x + (WINDOW_WIDTH/MAP_CELL_SIZE);
-    int end_y = start_y + (WINDOW_HEIGHT/MAP_CELL_SIZE);
+    int end_x = start_x + camera.w_x + 1;
+    int end_y = start_y + camera.w_y + 1;
+
+    if(start_x < 0) start_x = 0;
+    if(start_y < 0) start_y = 0;
+    if(end_x > MAP_COLS) end_x = MAP_COLS;
+    if(end_y > MAP_ROWS) end_y = MAP_ROWS; 
 
     for(int i = start_y; i < end_y ; i++){
         for(int j = start_x; j < end_x; j++){
             screen_position = (SDL_FRect){
-                .x = map_info[i][j].tile.x + camera.x,
-                .y = map_info[i][j].tile.y + camera.y,
+                .x = map_info[i][j].tile.x - ((float)camera.c_x * MAP_CELL_SIZE),
+                .y = map_info[i][j].tile.y - ((float)camera.c_y * MAP_CELL_SIZE),
                 .h = map_info[i][j].tile.h,
                 .w = map_info[i][j].tile.w
             };

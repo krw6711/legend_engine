@@ -9,8 +9,11 @@
 #define MAP_SPRITE_FILE "%sassets/map.png"
 #define MAP_SPRITE_SIZE 32
 
-#define WINDOW_WIDTH ((MAP_COLS - 5) * MAP_CELL_SIZE)
-#define WINDOW_HEIGHT ((MAP_ROWS - 5) * MAP_CELL_SIZE)
+#define CAMERA_X_CELLS (MAP_COLS - 5)
+#define CAMERA_Y_CELLS (MAP_ROWS - 5)
+
+#define WINDOW_WIDTH (CAMERA_X_CELLS * MAP_CELL_SIZE)
+#define WINDOW_HEIGHT (CAMERA_Y_CELLS * MAP_CELL_SIZE)
 
 #define WINDOW_TITLE "The Legend 2D Engine"
 #define APP_NAME "The Legend Engine"
