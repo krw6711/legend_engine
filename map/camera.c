@@ -1,6 +1,7 @@
 #include "camera.h"
 #include "../global/globals.h"
 #include "../physics/velocity.h"
+#include "SDL3/SDL_log.h"
 #include "map.h"
 
 Camera_t camera = {
@@ -26,7 +27,7 @@ void stop_moving_camera(void){
 };
 
 void moving_camera(){
-    if(camera.move.passed >= 1 || is_camera_collusion()){
+    if(camera.move.passed >= 1){
         stop_moving_camera();
     }
     if(camera.move.moving){
@@ -38,15 +39,19 @@ void moving_camera(){
         switch (camera.move.dir) {
             case UP:
                 camera.c_y -= delta_distance;
+                if(camera.c_y <= (-3)) stop_moving_camera();
                 break;
             case DOWN:
                 camera.c_y += delta_distance;
+                if(camera.c_y >= (MAP_ROWS - CAMERA_Y_CELLS + 3)) stop_moving_camera();
                 break;
             case RIGHT:
                 camera.c_x += delta_distance;
+                if(camera.c_x >= (MAP_COLS - CAMERA_X_CELLS + 3)) stop_moving_camera();
                 break;
             case LEFT:
                 camera.c_x -= delta_distance;
+                if(camera.c_x <= (-3)) stop_moving_camera();
                 break;
         }
     }
@@ -55,13 +60,17 @@ void moving_camera(){
 bool is_camera_collusion(){
     switch (camera.move.dir) {
         case UP:
-            if(camera.c_y <= (camera.w_y - 3)) return true;
+            if(camera.c_y <= (-3)) stop_moving_camera();
+            break;
         case DOWN:
-            if(camera.c_y >= (camera.w_y + 3)) return true;
+            if(camera.c_y >= (MAP_ROWS - CAMERA_Y_CELLS + 3)) stop_moving_camera();
+            break;
         case RIGHT:
-            if(camera.c_x >= (camera.w_x + 3)) return true;
+            if(camera.c_x >= (MAP_COLS - CAMERA_X_CELLS + 3)) stop_moving_camera();
+            break;
         case LEFT:
-            if(camera.c_x <= (camera.w_x - 3)) return true;
+            if(camera.c_x <= (-3)) stop_moving_camera();
+            break;
     }
     return false;
 }

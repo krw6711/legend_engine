@@ -91,6 +91,8 @@ int map_render(void){
     int start_x = (int)camera.c_x;
     int start_y = (int)camera.c_y; 
 
+    // SDL_Log("camera x,y: %f, %f", camera.c_x, camera.c_y);
+
     int end_x = start_x + camera.w_x + 1;
     int end_y = start_y + camera.w_y + 1;
 
