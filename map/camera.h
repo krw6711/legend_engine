@@ -8,6 +8,7 @@ typedef struct{
     float passed;
     Face_t dir;
     bool moving;
+    Face_t queued;
 } Camera_move_t;
 
 typedef struct {

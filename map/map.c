@@ -66,14 +66,14 @@ void map_load(void){
                 };
             }else if(i % 3 == 0 && j % 3 == 0){
                 map_info[i][j] = (Map_cell_ground){
-                    .sprite = {15*MAP_SPRITE_SIZE, 6*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
+                    .sprite = {20*MAP_SPRITE_SIZE, 0*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
                     .tile = {(j)*MAP_CELL_SIZE, (i)*MAP_CELL_SIZE, MAP_CELL_SIZE, MAP_CELL_SIZE},
                     .x = j,
                     .y = i
                 };
             }else{
                 map_info[i][j] = (Map_cell_ground){
-                    .sprite = {13*MAP_SPRITE_SIZE, 13*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
+                    .sprite = {13*MAP_SPRITE_SIZE, 0*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
                     .tile = {(j)*MAP_CELL_SIZE, (i)*MAP_CELL_SIZE, MAP_CELL_SIZE, MAP_CELL_SIZE},
                     .x = j,
                     .y = i

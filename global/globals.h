@@ -27,4 +27,6 @@ extern SDL_AudioStream *music;
 extern SDL_AudioStream *sfx;
 // extern SDL_Rect camera;
 
+// typedef enum {UP, DOWN, RIGHT, LEFT, NONE} Face_t;
+
 #endif 

@@ -12,7 +12,7 @@ typedef struct {
     // bool ground;
 } Map_cell_ground;
 
-typedef enum {UP, DOWN, RIGHT, LEFT} Face_t;
+typedef enum {UP, DOWN, RIGHT, LEFT, NONE} Face_t;
 
 typedef struct {
    float start_x, start_y;

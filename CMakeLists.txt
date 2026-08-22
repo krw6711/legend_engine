@@ -27,6 +27,6 @@ add_executable(main WIN32
 
 # Link to the actual SDL3 library.
 # SDL3_mixer::SDL3_mixer
-target_link_libraries(main PRIVATE SDL3::SDL3)
+target_link_libraries(main PRIVATE SDL3::SDL3 m)
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/assets/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/assets/)
