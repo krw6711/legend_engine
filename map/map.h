@@ -33,7 +33,7 @@ typedef struct {
     float x, y;
 } Object_t;
 
-extern Map_cell_ground **map_info;
+extern Map_cell_ground *map_info;
 extern SDL_Texture *map_texture;
 extern SDL_Texture *map_frame;
 // extern Object_t camera;

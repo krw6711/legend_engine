@@ -4,7 +4,7 @@
 #include "camera.h"
 
 // Make a large array for map meta info to access later
-Map_cell_ground **map_info = NULL;
+Map_cell_ground *map_info = NULL;
 SDL_Texture *map_texture = NULL;
 SDL_Texture *map_frame =  NULL;
 
@@ -12,18 +12,7 @@ SDL_Texture *map_frame =  NULL;
 
 // initialize map array
 int map_mem_init(void){
-    map_info = malloc(MAP_ROWS * sizeof(Map_cell_ground *));
-    if(!map_info){
-        SDL_Log("Error Allocating Memory for map");
-        return 1;
-    }
-    for(int i = 0; i < MAP_ROWS; i++){
-        map_info[i] = malloc(MAP_COLS * sizeof(Map_cell_ground));
-        if(!map_info[i]){
-            SDL_Log("Error Allocating Memory for map");
-            return 1;
-        }
-    }
+    map_info = malloc(MAP_ROWS * MAP_COLS * sizeof(Map_cell_ground));
     return 0;
 }
 
@@ -54,34 +43,34 @@ int load_map_sprite(void){
 
 void map_load(void){
     // 14 20 21
-    for(int i = 0; i < MAP_ROWS; i++){
-        for(int j = 0; j < MAP_COLS; j++){
-
-            if( i == 0 || i == MAP_ROWS - 1 || j == 0 || j == MAP_COLS -1 ){
-                map_info[i][j] = (Map_cell_ground){
-                    .sprite = {1*MAP_SPRITE_SIZE, 7*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
-                    .tile = {(j)*MAP_CELL_SIZE, (i)*MAP_CELL_SIZE, MAP_CELL_SIZE, MAP_CELL_SIZE},
-                    .x = j,
-                    .y = i
-                };
-            }else if(i % 3 == 0 && j % 3 == 0){
-                map_info[i][j] = (Map_cell_ground){
-                    .sprite = {20*MAP_SPRITE_SIZE, 0*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
-                    .tile = {(j)*MAP_CELL_SIZE, (i)*MAP_CELL_SIZE, MAP_CELL_SIZE, MAP_CELL_SIZE},
-                    .x = j,
-                    .y = i
-                };
-            }else{
-                map_info[i][j] = (Map_cell_ground){
-                    .sprite = {13*MAP_SPRITE_SIZE, 0*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
-                    .tile = {(j)*MAP_CELL_SIZE, (i)*MAP_CELL_SIZE, MAP_CELL_SIZE, MAP_CELL_SIZE},
-                    .x = j,
-                    .y = i
-                };
-            }
-
-            // SDL_Log("loaded %d %d", j, i);
+    int x, y;
+    for(int i = 0; i < (MAP_ROWS * MAP_COLS); i++){
+        x = i % MAP_COLS;
+        y = i / MAP_COLS;
+        if(x % 2){
+            map_info[i] = (Map_cell_ground){
+                .sprite = {7*MAP_SPRITE_SIZE, 3*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
+                .tile = {(x)*MAP_CELL_SIZE, (y)*MAP_CELL_SIZE, MAP_CELL_SIZE, MAP_CELL_SIZE},
+                .x = x,
+                .y = y
+            };
         }
+        if(y % 3){
+            map_info[i] = (Map_cell_ground){
+                .sprite = {1*MAP_SPRITE_SIZE, 17*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
+                .tile = {(x)*MAP_CELL_SIZE, (y)*MAP_CELL_SIZE, MAP_CELL_SIZE, MAP_CELL_SIZE},
+                .x = x,
+                .y = y
+            };
+        }else{
+            map_info[i] = (Map_cell_ground){
+                .sprite = {1*MAP_SPRITE_SIZE, 7*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
+                .tile = {(x)*MAP_CELL_SIZE, (y)*MAP_CELL_SIZE, MAP_CELL_SIZE, MAP_CELL_SIZE},
+                .x = x,
+                .y = y
+            };
+        }       
+        // SDL_Log("x %d y %d i %d", x, y, i);
     }
 }
 
@@ -101,16 +90,22 @@ int map_render(void){
     if(end_x > MAP_COLS) end_x = MAP_COLS;
     if(end_y > MAP_ROWS) end_y = MAP_ROWS; 
 
-    for(int i = start_y; i < end_y ; i++){
-        for(int j = start_x; j < end_x; j++){
-            screen_position = (SDL_FRect){
-                .x = map_info[i][j].tile.x - ((float)camera.c_x * MAP_CELL_SIZE),
-                .y = map_info[i][j].tile.y - ((float)camera.c_y * MAP_CELL_SIZE),
-                .h = map_info[i][j].tile.h,
-                .w = map_info[i][j].tile.w
-            };
-            SDL_RenderTexture(renderer, map_texture, &map_info[i][j].sprite, &screen_position);
+    int x = start_x ,y = start_y, index, loop_length = (end_x - start_x) * (end_y - start_y);
+    for(int i = 0; i < loop_length; i++){
+        if(x == end_x){
+            x = start_x; y++;
         }
+        if(y == end_y) break;
+        index = x + (MAP_COLS * y);
+        screen_position = (SDL_FRect){
+            .x = map_info[index].tile.x - ((float)camera.c_x * MAP_CELL_SIZE),
+            .y = map_info[index].tile.y - ((float)camera.c_y * MAP_CELL_SIZE),
+            .h = map_info[index].tile.h,
+            .w = map_info[index].tile.w
+        };
+        x++;
+        // SDL_Log("x %f y %f i %d", screen_position.x , screen_position.y, index);
+        SDL_RenderTexture(renderer, map_texture, &map_info[index].sprite, &screen_position);
     }
     return 0;
 }
