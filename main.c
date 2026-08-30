@@ -52,27 +52,6 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
         }
         SDL_Log( "Joystick #%u removed", (unsigned int) which);
     } 
-    if (event->type == SDL_EVENT_KEY_DOWN) {
-        // camera moving events
-        // SDL_Log("camera %d %d", camera.x, camera.y);
-        if (event->key.key == SDLK_UP){
-            // camera.c_y--;
-            start_moving_camera(UP);
-        }
-        if (event->key.key == SDLK_DOWN)
-        {
-            // camera.c_y++;
-            start_moving_camera(DOWN);
-        }
-        if (event->key.key == SDLK_RIGHT){
-            // camera.c_x++;
-            start_moving_camera(RIGHT);
-        }
-        if (event->key.key == SDLK_LEFT){
-            // camera.c_x--;
-            start_moving_camera(LEFT);
-        }
-    }
     return SDL_APP_CONTINUE;  /* carry on with the program! */
 }
 
@@ -81,6 +60,7 @@ SDL_AppResult SDL_AppIterate(void *appstate)
     // do_move(&camera.y, camera.y + MAP_CELL_SIZE , MAP_CELL_SIZE, 0.5, &camera.last_time);
 
     joystick_iterate_event();
+    keyboard_iterate_events();
     moving_items();
     
     moving_camera();
