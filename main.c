@@ -3,8 +3,6 @@
 #include "./map/map.h"
 #include "./map/camera.h"
 #include "./global/iterate_event.h"
-#include "SDL3/SDL_oldnames.h"
-#include "physics/velocity.h"
 
 #define SDL_MAIN_USE_CALLBACKS 1  /* use the callbacks instead of main() */
 #include <SDL3/SDL_main.h>
@@ -58,17 +56,21 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
         // camera moving events
         // SDL_Log("camera %d %d", camera.x, camera.y);
         if (event->key.key == SDLK_UP){
-            camera.c_y--;
+            // camera.c_y--;
+            start_moving_camera(UP);
         }
         if (event->key.key == SDLK_DOWN)
         {
-            camera.c_y++;
+            // camera.c_y++;
+            start_moving_camera(DOWN);
         }
         if (event->key.key == SDLK_RIGHT){
-            camera.c_x++;
+            // camera.c_x++;
+            start_moving_camera(RIGHT);
         }
         if (event->key.key == SDLK_LEFT){
-            camera.c_x--;
+            // camera.c_x--;
+            start_moving_camera(LEFT);
         }
     }
     return SDL_APP_CONTINUE;  /* carry on with the program! */

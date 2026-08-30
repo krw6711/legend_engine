@@ -18,10 +18,11 @@ void start_moving_camera(Face_t dir){
         camera.move.queued = NONE;
         camera.c_x = roundf(camera.c_x);
         camera.c_y = roundf(camera.c_y);
-    }else{
-        camera.move.queued = dir;
-        SDL_Log("a movment have been queued");
     }
+    // else{
+    //     camera.move.queued = dir;
+    //     SDL_Log("a movment have been queued");
+    // }
 }
 void stop_moving_camera(void){
     if(camera.move.moving){
@@ -30,7 +31,7 @@ void stop_moving_camera(void){
         camera.move.last_time = 0;
         camera.move.passed = 0;
     }
-    if(camera.move.queued != NONE){
+    if(camera.move.queued != NONE && !camera.move.moving){
         SDL_Log("a queued movment is moving");
         start_moving_camera(camera.move.queued);
     }
@@ -45,20 +46,22 @@ void moving_camera(){
         camera.move.passed += delta_distance;
         switch (camera.move.dir) {
             case UP:
-                camera.c_y -= delta_distance;
                 if(camera.c_y <= (0)) stop_moving_camera();
+                camera.c_y -= delta_distance;
                 break;
             case DOWN:
-                camera.c_y += delta_distance;
                 if(camera.c_y >= (MAP_ROWS - CAMERA_Y_CELLS)) stop_moving_camera();
+                camera.c_y += delta_distance;
                 break;
             case RIGHT:
-                camera.c_x += delta_distance;
                 if(camera.c_x >= (MAP_COLS - CAMERA_X_CELLS)) stop_moving_camera();
+                camera.c_x += delta_distance;
                 break;
             case LEFT:
-                camera.c_x -= delta_distance;
                 if(camera.c_x <= (0)) stop_moving_camera();
+                camera.c_x -= delta_distance;
+                break;
+            case NONE:
                 break;
         }
         if(camera.move.passed >= 1){
