@@ -19,10 +19,6 @@ void start_moving_camera(Face_t dir){
         camera.c_x = roundf(camera.c_x);
         camera.c_y = roundf(camera.c_y);
     }
-    // else{
-    //     camera.move.queued = dir;
-    //     SDL_Log("a movment have been queued");
-    // }
 }
 void stop_moving_camera(void){
     if(camera.move.moving){

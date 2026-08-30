@@ -4,15 +4,13 @@
 #include "camera.h"
 
 // Make a large array for map meta info to access later
-Map_cell_ground *map_info = NULL;
+Map_cell *map_info = NULL;
 SDL_Texture *map_texture = NULL;
 SDL_Texture *map_frame =  NULL;
 
-// Object_t camera = {.x=0,.y=0, .border={0, 0, -(MAP_CELL_SIZE*MAP_COLS) - WINDOW_WIDTH, -(MAP_ROWS*MAP_CELL_SIZE) - WINDOW_HEIGHT}};
-
 // initialize map array
 int map_mem_init(void){
-    map_info = malloc(MAP_ROWS * MAP_COLS * sizeof(Map_cell_ground));
+    map_info = malloc(MAP_ROWS * MAP_COLS * sizeof(Map_cell));
     return 0;
 }
 
@@ -48,23 +46,29 @@ void map_load(void){
         x = i % MAP_COLS;
         y = i / MAP_COLS;
         if(x % 2){
-            map_info[i] = (Map_cell_ground){
-                .sprite = {7*MAP_SPRITE_SIZE, 3*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
+            map_info[i] = (Map_cell){
+                .sprite = {1*MAP_SPRITE_SIZE, 4*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
                 .tile = {(x)*MAP_CELL_SIZE, (y)*MAP_CELL_SIZE, MAP_CELL_SIZE, MAP_CELL_SIZE},
+                .type = GROUND,
+                .id = -1
             };
         }else if(y % 6){
-            map_info[i] = (Map_cell_ground){
-                .sprite = {1*MAP_SPRITE_SIZE, 17*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
+            map_info[i] = (Map_cell){
+                .sprite = {2*MAP_SPRITE_SIZE, 4*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
                 .tile = {(x)*MAP_CELL_SIZE, (y)*MAP_CELL_SIZE, MAP_CELL_SIZE, MAP_CELL_SIZE},
+                .type = GROUND,
+                .id = -1
             };
         }else{
-            map_info[i] = (Map_cell_ground){
-                .sprite = {1*MAP_SPRITE_SIZE, 5*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
+            map_info[i] = (Map_cell){
+                .sprite = {4*MAP_SPRITE_SIZE, 4*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
                 .tile = {(x)*MAP_CELL_SIZE, (y)*MAP_CELL_SIZE, MAP_CELL_SIZE, MAP_CELL_SIZE},
+                .type = GROUND,
+                .id = -1
             };
-        }       
-        // SDL_Log("x %d y %d i %d", x, y, i);
+        }
     }
+
 }
 
 int map_render(void){
@@ -72,8 +76,6 @@ int map_render(void){
 
     int start_x = (int)camera.c_x;
     int start_y = (int)camera.c_y; 
-
-    // SDL_Log("camera x,y: %f, %f", camera.c_x, camera.c_y);
 
     int end_x = start_x + camera.w_x + 1;
     int end_y = start_y + camera.w_y + 1;
@@ -97,7 +99,6 @@ int map_render(void){
             .w = map_info[index].tile.w
         };
         x++;
-        // SDL_Log("x %f y %f i %d", screen_position.x , screen_position.y, index);
         SDL_RenderTexture(renderer, map_texture, &map_info[index].sprite, &screen_position);
     }
     return 0;

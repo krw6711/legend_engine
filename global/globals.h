@@ -20,13 +20,12 @@
 #define APP_ID "com.legend.engine.2d"
 #define APP_VERSION "0.1"
 
+typedef enum {UP, DOWN, RIGHT, LEFT, NONE} Face_t;
+
 extern SDL_Window *window;
 extern SDL_Renderer *renderer;
 extern SDL_Joystick *joystick;
 extern SDL_AudioStream *music;
 extern SDL_AudioStream *sfx;
-// extern SDL_Rect camera;
-
-// typedef enum {UP, DOWN, RIGHT, LEFT, NONE} Face_t;
 
 #endif 

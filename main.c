@@ -57,11 +57,8 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
 
 SDL_AppResult SDL_AppIterate(void *appstate)
 {
-    // do_move(&camera.y, camera.y + MAP_CELL_SIZE , MAP_CELL_SIZE, 0.5, &camera.last_time);
-
     joystick_iterate_event();
     keyboard_iterate_events();
-    moving_items();
     
     moving_camera();
 
@@ -70,9 +67,6 @@ SDL_AppResult SDL_AppIterate(void *appstate)
     
     // render the built map
     map_render();
-
-    // camera coordinates
-    // SDL_SetRenderViewport(renderer, &camera);
 
     // output on the screen
     SDL_RenderPresent(renderer);

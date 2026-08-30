@@ -45,7 +45,3 @@ void keyboard_iterate_events(){
         start_moving_camera(RIGHT);
     }
 }
-
-void moving_items(void){
-    // if(camera.move.moving) move(&camera);
-}

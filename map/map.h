@@ -4,36 +4,18 @@
 
 #include <stdbool.h>
 
+typedef enum {GROUND, WALL, ENTITY, ITEM, NPC, BOSS} Entity_types_t;
+
 typedef struct {
     SDL_FRect sprite;
     SDL_FRect tile;
-} Map_cell_ground;
+    Entity_types_t type;
+    int id;
+} Map_cell;
 
-typedef enum {UP, DOWN, RIGHT, LEFT, NONE} Face_t;
-
-typedef struct {
-   float start_x, start_y;
-   float end_x, end_y;
-} Collusion_Informtion_t;
-
-typedef struct {
-   Face_t face;
-   float last_time;
-   float target;
-   float velocity;
-   bool moving; 
-} Moving_t;
-
-typedef struct {
-    Moving_t move;
-    Collusion_Informtion_t border;
-    float x, y;
-} Object_t;
-
-extern Map_cell_ground *map_info;
+extern Map_cell *map_info;
 extern SDL_Texture *map_texture;
 extern SDL_Texture *map_frame;
-// extern Object_t camera;
 
 int map_init(void);
 int map_mem_init(void);
