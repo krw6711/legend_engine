@@ -7,9 +7,6 @@
 typedef struct {
     SDL_FRect sprite;
     SDL_FRect tile;
-    int x;
-    int y;
-    // bool ground;
 } Map_cell_ground;
 
 typedef enum {UP, DOWN, RIGHT, LEFT, NONE} Face_t;

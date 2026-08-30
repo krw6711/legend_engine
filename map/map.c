@@ -51,23 +51,16 @@ void map_load(void){
             map_info[i] = (Map_cell_ground){
                 .sprite = {7*MAP_SPRITE_SIZE, 3*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
                 .tile = {(x)*MAP_CELL_SIZE, (y)*MAP_CELL_SIZE, MAP_CELL_SIZE, MAP_CELL_SIZE},
-                .x = x,
-                .y = y
             };
-        }
-        if(y % 3){
+        }else if(y % 6){
             map_info[i] = (Map_cell_ground){
                 .sprite = {1*MAP_SPRITE_SIZE, 17*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
                 .tile = {(x)*MAP_CELL_SIZE, (y)*MAP_CELL_SIZE, MAP_CELL_SIZE, MAP_CELL_SIZE},
-                .x = x,
-                .y = y
             };
         }else{
             map_info[i] = (Map_cell_ground){
-                .sprite = {1*MAP_SPRITE_SIZE, 7*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
+                .sprite = {1*MAP_SPRITE_SIZE, 5*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
                 .tile = {(x)*MAP_CELL_SIZE, (y)*MAP_CELL_SIZE, MAP_CELL_SIZE, MAP_CELL_SIZE},
-                .x = x,
-                .y = y
             };
         }       
         // SDL_Log("x %d y %d i %d", x, y, i);
