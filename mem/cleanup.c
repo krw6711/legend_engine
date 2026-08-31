@@ -23,6 +23,9 @@ int clean_heaps(void){
     if(map_texture) SDL_DestroyTexture(map_texture);
     map_texture = NULL;
 
+    if(player) free(player);
+    player = NULL;
+
     if(window) SDL_DestroyWindow(window);
     if(renderer) SDL_DestroyRenderer(renderer);
     window = NULL;

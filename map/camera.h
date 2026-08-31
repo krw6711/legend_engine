@@ -19,7 +19,6 @@ typedef struct {
 
 extern Camera_t camera;
 
-bool is_camera_collusion();
 void start_moving_camera(Face_t dir);
 void stop_moving_camera(void);
 void moving_camera(void);

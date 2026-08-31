@@ -20,7 +20,13 @@
 #define APP_ID "com.legend.engine.2d"
 #define APP_VERSION "0.1"
 
-typedef enum {UP, DOWN, RIGHT, LEFT, NONE} Face_t;
+typedef enum {
+    UP=1,
+    DOWN=0, 
+    RIGHT=3, 
+    LEFT=2,
+    NONE=4
+}Face_t;
 
 extern SDL_Window *window;
 extern SDL_Renderer *renderer;

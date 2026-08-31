@@ -29,7 +29,6 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
 
     SDL_SetRenderVSync(renderer, 1);
 
-    init_player_coordinates();
     init_player();
 
     return SDL_APP_CONTINUE;  /* carry on with the program! */
