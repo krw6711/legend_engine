@@ -1,6 +1,6 @@
 #include "globals.h"
 #include "iterate_event.h"
-#include "../map/map.h"
+#include "../entities/entity.h"
 #include "../map/camera.h"
 
 void joystick_iterate_event(){
@@ -33,15 +33,15 @@ void keyboard_iterate_events(){
     const bool *keys = SDL_GetKeyboardState(NULL);
 
     if (keys[SDL_SCANCODE_W] || keys[SDL_SCANCODE_UP]) {
-        start_moving_camera(UP);
+        // start_moving_camera(UP);
     }
     if (keys[SDL_SCANCODE_S] || keys[SDL_SCANCODE_DOWN]) {
-        start_moving_camera(DOWN);
+        // start_moving_camera(DOWN);
     }
     if (keys[SDL_SCANCODE_A] || keys[SDL_SCANCODE_LEFT]) {
-        start_moving_camera(LEFT);
+        // start_moving_camera(LEFT);
     }
     if (keys[SDL_SCANCODE_D] || keys[SDL_SCANCODE_RIGHT]) {
-        start_moving_camera(RIGHT);
+        // start_moving_camera(RIGHT);
     }
 }

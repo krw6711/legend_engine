@@ -56,7 +56,7 @@ void map_load(void){
             map_info[i] = (Map_cell){
                 .sprite = {2*MAP_SPRITE_SIZE, 4*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
                 .tile = {(x)*MAP_CELL_SIZE, (y)*MAP_CELL_SIZE, MAP_CELL_SIZE, MAP_CELL_SIZE},
-                .type = GROUND,
+                .type = WALL,
                 .id = -1
             };
         }else{

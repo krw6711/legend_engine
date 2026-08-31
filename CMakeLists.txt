@@ -20,6 +20,7 @@ add_executable(main WIN32
     ./map/camera.c
     ./physics/velocity.c
     ./global/iterate_event.c
+    ./entities/entity.c
 )
 
 # target_compile_options(main PRIVATE -fsanitize=address -g)
