@@ -3,6 +3,7 @@
 
 #include "../global/globals.h"
 #include "SDL3/SDL_rect.h"
+#include <stdbool.h>
 
 typedef enum {GROUND, WALL, ENTITY, ITEM, NPC, BOSS} Entity_types_t;
 
@@ -24,12 +25,17 @@ typedef struct {
     Face_t face;
 } Player_t;
 
+typedef struct {
+    int index, x, y;
+} Coordinates_t;
+
 extern Player_t *player;
 
 int init_player();
 void render_player();
 void update_face();
-int get_new_index();
+bool is_walkable(Coordinates_t new_coord);
+Coordinates_t get_new_index();
 int update_position();
 void move_player(Face_t face);
 
