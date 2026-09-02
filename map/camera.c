@@ -35,7 +35,7 @@ void stop_moving_camera(void){
 
 void moving_camera(){
     if(camera.move.moving){
-        float delta_distance = calc_new_distance(4, &camera.move.last_time);
+        float delta_distance = calc_new_distance(2, &camera.move.last_time);
         if(camera.move.passed + delta_distance >= 1){
             delta_distance = 1 - camera.move.passed;
         }

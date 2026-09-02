@@ -58,7 +58,7 @@ void update_sprite(Player_t *object)
 
 void move(Player_t *object) {
     if(player->move.moving){
-        float delta_distance = calc_new_distance(MAP_CELL_SIZE*4, &player->move.last_time);
+        float delta_distance = calc_new_distance(MAP_CELL_SIZE*2, &player->move.last_time);
     
         if(player->move.passed + delta_distance >= MAP_CELL_SIZE)
         {
