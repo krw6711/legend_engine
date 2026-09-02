@@ -1,5 +1,7 @@
 #include "velocity.h"
 #include "../entities/entity.h"
+#include "SDL3/SDL_log.h"
+#include "SDL3/SDL_stdinc.h"
 
 float calc_new_distance(float velocity, float *last_time) {
   float now = (float)SDL_GetTicks() / 1000;
@@ -17,7 +19,8 @@ void start_moving(Player_t *object, Coordinates_t new_coord) {
         object->move.last_time = (float)SDL_GetTicks() / 1000;
         
         object->move.new_x = new_coord.x;
-        object->move.new_y = new_coord.y;        
+        object->move.new_y = new_coord.y;
+        object->sprite.coordinates.x = 0;
     }
 }
 
@@ -40,6 +43,16 @@ void stop_moving(Player_t *object)
 
         object->move.new_x = 0;
         object->move.new_y = 0;
+        object->sprite.coordinates.x = 0;
+    }
+}
+
+void update_sprite(Player_t *object)
+{
+    if(object->move.moving)
+    {
+        object->sprite.coordinates.x = ((int)(SDL_GetTicks()/100) % (int)object->sprite.count) * MAP_SPRITE_SIZE;
+        SDL_Log("new sprite x %f", object->sprite.coordinates.x);
     }
 }
 
@@ -63,6 +76,7 @@ void move(Player_t *object) {
                 player->tile.x -= delta_distance; break;
             case NONE: break;
         }
+        update_sprite(player);
         if(player->move.passed >= MAP_CELL_SIZE)
         {
             stop_moving(object);

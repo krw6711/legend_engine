@@ -22,6 +22,7 @@ int init_player()
         MAP_CELL_SIZE,
         MAP_CELL_SIZE    
     };
+    player->sprite.count = 5;
     player->sprite.start_x = 0;
     player->sprite.start_y = 0;
     player->sprite.coordinates = (SDL_FRect){
