@@ -61,7 +61,7 @@ void moving_camera(){
                 break;
         }
         if(camera.move.passed >= 1){
-        stop_moving_camera();
+            stop_moving_camera();
         }
     }
 }

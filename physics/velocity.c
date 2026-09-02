@@ -10,82 +10,62 @@ float calc_new_distance(float velocity, float *last_time) {
   return velocity * (float)delta_time;
 }
 
-void start_moving(Player_t *object, float velocity, float delta_distance) {
-  if (!object->move.moving) {
-    object->move.moving = true;
-    object->move.velocity = velocity;
-    object->move.last_time = (float)SDL_GetTicks() / 1000;
-    switch (object->face) {
-    case UP:
-      object->move.target = object->tile.y - delta_distance;
-      break;
-    case DOWN:
-      object->move.target = object->tile.y + delta_distance;
-      break;
-    case RIGHT:
-      object->move.target = object->tile.x + delta_distance;
-      break;
-    case LEFT:
-      object->move.target = object->tile.x - delta_distance;
-      break;
-    case NONE:
-      break;
+void start_moving(Player_t *object, Coordinates_t new_coord) {
+    if(!object->move.moving){
+        object->move.moving = true;
+        object->move.passed = 0;
+        object->move.last_time = (float)SDL_GetTicks() / 1000;
+        
+        object->move.new_x = new_coord.x;
+        object->move.new_y = new_coord.y;        
     }
-  }
 }
 
-void stop_moving(Player_t *object) {
-  object->move.last_time = 0;
-  object->move.moving = false;
-  object->move.target = 0;
-  object->move.velocity = 0;
+void stop_moving(Player_t *object)
+{
+    if(object->move.moving){
+        object->move.moving = false;
+        object->move.passed = 0;
+        object->move.last_time = 0;
 
-  object->tile = (SDL_FRect){ 
-    player->x * MAP_CELL_SIZE,
-    player->y * MAP_CELL_SIZE,
-    MAP_CELL_SIZE,
-    MAP_CELL_SIZE    
-  };
+        object->x = object->move.new_x;
+        object->y = object->move.new_y;
+
+        object->tile = (SDL_FRect){ 
+            object->x * MAP_CELL_SIZE,
+            object->y * MAP_CELL_SIZE,
+            MAP_CELL_SIZE,
+            MAP_CELL_SIZE    
+        };
+
+        object->move.new_x = 0;
+        object->move.new_y = 0;
+    }
 }
 
 void move(Player_t *object) {
-  if (object->move.moving) {
-    float delta_distance = calc_new_distance(object->move.velocity, &object->move.last_time);
-    switch (object->face) {
-        case UP:
-            if ((object->tile.y - delta_distance) > object->move.target) {
-                object->tile.y = object->move.target;
-                stop_moving(object);
-            } else {
-                object->tile.y -= delta_distance;
-            }
-            break;
-        case DOWN:
-            if ((object->tile.y + delta_distance) > object->move.target) {
-                object->tile.y = object->move.target;
-                stop_moving(object);
-            } else {
-                object->tile.y += delta_distance;
-            }
-            break;
-        case RIGHT:
-            if ((object->tile.x + delta_distance) > object->move.target) {
-                object->tile.x = object->move.target;
-                stop_moving(object);
-            } else {
-                object->tile.x += delta_distance;
-            }
-            break;
-        case LEFT:
-            if ((object->tile.x - delta_distance) > object->move.target) {
-                object->tile.x = object->move.target;
-                stop_moving(object);
-            } else {
-                object->tile.x -= delta_distance;
-            }
-            break;
-        case NONE:
-        break;
+    if(player->move.moving){
+        float delta_distance = calc_new_distance(MAP_CELL_SIZE*4, &player->move.last_time);
+    
+        if(player->move.passed + delta_distance >= MAP_CELL_SIZE)
+        {
+            delta_distance = MAP_CELL_SIZE - player->move.passed;
+        }
+        player->move.passed += delta_distance;
+        switch(player->face){
+            case UP:
+                player->tile.y -= delta_distance; break;
+            case DOWN:
+                player->tile.y += delta_distance; break;
+            case RIGHT:
+                player->tile.x += delta_distance; break;
+            case LEFT:
+                player->tile.x -= delta_distance; break;
+            case NONE: break;
+        }
+        if(player->move.passed >= MAP_CELL_SIZE)
+        {
+            stop_moving(object);
+        }
     }
-  }
 }

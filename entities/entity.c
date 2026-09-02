@@ -35,9 +35,11 @@ int init_player()
 
 void move_player(Face_t face)
 {
-    player->face = face;
-    update_face();
-    update_position();
+    if(!player->move.moving){
+        player->face = face;
+        update_face();
+        update_position();
+    }
 }
 
 void update_face()
@@ -119,17 +121,7 @@ int update_position()
         start_moving_camera(player->face);
     }
 
-    // start_moving(player, 1, MAP_CELL_SIZE);
-
-    player->x = new_coord.x;
-    player->y = new_coord.y;
-
-    player->tile = (SDL_FRect){ 
-        player->x * MAP_CELL_SIZE,
-        player->y * MAP_CELL_SIZE,
-        MAP_CELL_SIZE,
-        MAP_CELL_SIZE    
-    };
+    start_moving(player, new_coord);
 
     return 0;
 }

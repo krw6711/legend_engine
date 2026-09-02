@@ -4,6 +4,7 @@
 #include "./map/camera.h"
 #include "./global/iterate_event.h"
 #include "./entities/entity.h"
+#include "physics/velocity.h"
 
 #define SDL_MAIN_USE_CALLBACKS 1  /* use the callbacks instead of main() */
 #include <SDL3/SDL_main.h>
@@ -57,19 +58,19 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
     }
 
     if (event->type == SDL_EVENT_KEY_DOWN) {
-        if (event->key.key == SDLK_UP){
-            move_player(UP);
-        }
-        if (event->key.key == SDLK_DOWN)
-        {
-            move_player(DOWN);
-        }
-        if (event->key.key == SDLK_RIGHT){
-            move_player(RIGHT);
-        }
-        if (event->key.key == SDLK_LEFT){
-            move_player(LEFT);
-        }
+        // if (event->key.key == SDLK_UP){
+        //     move_player(UP);
+        // }
+        // if (event->key.key == SDLK_DOWN)
+        // {
+        //     move_player(DOWN);
+        // }
+        // if (event->key.key == SDLK_RIGHT){
+        //     move_player(RIGHT);
+        // }
+        // if (event->key.key == SDLK_LEFT){
+        //     move_player(LEFT);
+        // }
     }
     return SDL_APP_CONTINUE;  /* carry on with the program! */
 }
@@ -80,6 +81,7 @@ SDL_AppResult SDL_AppIterate(void *appstate)
     keyboard_iterate_events();
     
     moving_camera();
+    move(player);
 
     SDL_SetRenderDrawColor(renderer, 60, 60, 60, SDL_ALPHA_OPAQUE); // make a black-gray background
     SDL_RenderClear(renderer); // clear the canvas

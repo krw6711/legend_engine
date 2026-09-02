@@ -11,8 +11,9 @@ typedef struct{
     bool moving;
     Face_t queue;
     float last_time;
-    float target;
-    float velocity;
+    float passed;
+    int new_x;
+    int new_y;
 } Movement_t;
 
 typedef struct {
