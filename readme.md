@@ -10,7 +10,7 @@ message to you!
 >
 >It might not be perfect, I am a solo working developer, but trying my best, because I love what I am doing :D
 >
->Our Game Engine, which called: The Legend Engine 2D, I may change its name later if you want :). this will provide ability to make a 2D RPG Game with Tile Map style same as old Nintendo's Library like Pokemon, Final Fantasy, Zelda and so on, with a Turn Based fighting
+>Our Game Engine, which called: Legend Engine. this will provide ability to make a 2D RPG Game with Tile Map style same as old Nintendo's Library like Pokemon, Final Fantasy, Zelda and so on, with a Turn Based fighting
 >
 >the coming game might be just a mix of memes I know! it will be just a prof of concept and demo for the game engine, real work comes after that, but I am sure you all would love Bouha and his sister and may enjoy the juorny in Zifta great lands!
 >
