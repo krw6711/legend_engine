@@ -43,19 +43,19 @@ void moving_camera(){
         switch (camera.move.dir) {
             case UP:
                 camera.c_y -= delta_distance;
-                if(camera.c_y <= (0)) stop_moving_camera();
+                if(camera.c_y <= (-4)) stop_moving_camera();
                 break;
             case DOWN:
                 camera.c_y += delta_distance;
-                if(camera.c_y >= (MAP_ROWS - CAMERA_Y_CELLS)) stop_moving_camera();
+                if(camera.c_y >= (MAP_ROWS - CAMERA_Y_CELLS + 4)) stop_moving_camera();
                 break;
             case RIGHT:
                 camera.c_x += delta_distance;
-                if(camera.c_x >= (MAP_COLS - CAMERA_X_CELLS)) stop_moving_camera();
+                if(camera.c_x >= (MAP_COLS - CAMERA_X_CELLS + 4)) stop_moving_camera();
                 break;
             case LEFT:
                 camera.c_x -= delta_distance;
-                if(camera.c_x <= (0)) stop_moving_camera();
+                if(camera.c_x <= (-4)) stop_moving_camera();
                 break;
             case NONE:
                 break;

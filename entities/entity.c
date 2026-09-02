@@ -1,6 +1,7 @@
 #include "./entity.h"
 #include "../map/map.h"
 #include "../map/camera.h"
+#include "../physics/velocity.h"
 #include <stdbool.h>
 #include <stdlib.h>
 
@@ -82,11 +83,28 @@ bool is_walkable(Coordinates_t new_coord)
     if(new_coord.x >= MAP_COLS) return false;
     if(new_coord.y < 0) return false;
     if(new_coord.y >= MAP_ROWS) return false;
+
     if(new_coord.index < 0) return false;
 
     if(map_info[new_coord.index].type != GROUND) return false;
 
     return true;
+}
+
+Face_t is_move_camera_with_player(Coordinates_t new_coord)
+{
+    int start_x = (int)camera.c_x + 3;
+    int start_y = (int)camera.c_y + 3; 
+
+    int end_x = (int)camera.c_x + (int)camera.w_x - 3;
+    int end_y = (int)camera.c_y + (int)camera.w_y - 3;
+
+    if(new_coord.x < start_x) return LEFT;
+    if(new_coord.x >= (end_x)) return RIGHT;
+    if(new_coord.y < start_y) return UP;
+    if(new_coord.y >= (end_y)) return DOWN;
+
+    return NONE;
 }
 
 int update_position()
@@ -97,20 +115,33 @@ int update_position()
         return 1;
     }
 
+    if(is_move_camera_with_player(new_coord) != NONE){
+        start_moving_camera(player->face);
+    }
+
+    // start_moving(player, 1, MAP_CELL_SIZE);
+
     player->x = new_coord.x;
     player->y = new_coord.y;
 
-    // start_moving_camera(player->face);
     player->tile = (SDL_FRect){ 
         player->x * MAP_CELL_SIZE,
         player->y * MAP_CELL_SIZE,
         MAP_CELL_SIZE,
         MAP_CELL_SIZE    
     };
+
     return 0;
 }
 
 void render_player()
 {
-    SDL_RenderTexture(renderer, map_texture, &player->sprite.coordinates, &player->tile);
+    SDL_FRect screen_position;
+    screen_position = (SDL_FRect){
+        .x = player->tile.x - ((float)camera.c_x * MAP_CELL_SIZE),
+        .y = player->tile.y - ((float)camera.c_y * MAP_CELL_SIZE),
+        .h = player->tile.h,
+        .w = player->tile.w
+    };
+    SDL_RenderTexture(renderer, map_texture, &player->sprite.coordinates, &screen_position);
 }

@@ -10,6 +10,9 @@ typedef enum {GROUND, WALL, ENTITY, ITEM, NPC, BOSS} Entity_types_t;
 typedef struct{
     bool moving;
     Face_t queue;
+    float last_time;
+    float target;
+    float velocity;
 } Movement_t;
 
 typedef struct {
@@ -35,6 +38,7 @@ int init_player();
 void render_player();
 void update_face();
 bool is_walkable(Coordinates_t new_coord);
+Face_t is_move_camera_with_player(Coordinates_t new_coord);
 Coordinates_t get_new_index();
 int update_position();
 void move_player(Face_t face);
