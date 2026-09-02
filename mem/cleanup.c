@@ -2,6 +2,7 @@
 #include "../global/globals.h"
 #include "../map/map.h"
 #include <stdlib.h>
+#include "../entities/entity.h"
 
 int clean_heaps(void){
     // Free SDL Stuff
@@ -25,6 +26,9 @@ int clean_heaps(void){
 
     if(player) free(player);
     player = NULL;
+
+    if(entities) free(entities);
+    entities = NULL;
 
     if(window) SDL_DestroyWindow(window);
     if(renderer) SDL_DestroyRenderer(renderer);
