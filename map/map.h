@@ -1,7 +1,7 @@
 #ifndef MAP_H
 #define MAP_H
 #include "../global/globals.h"
-#include "../entities/entity.h"
+#include "../entities/player.h"
 #include <stdbool.h>
 
 typedef struct {

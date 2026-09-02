@@ -1,7 +1,6 @@
 #ifndef VELOCITY_H
 #define VELOCITY_H
-#include "../global/globals.h"
-#include "../entities/entity.h"
+#include "../entities/player.h"
 
 float calc_new_distance(float velocity, float *last_time);
 void start_moving(Player_t *object, Coordinates_t new_coord);

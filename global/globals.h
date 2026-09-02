@@ -3,14 +3,14 @@
 
 #include <SDL3/SDL.h>
 
-#define MAP_COLS 30
-#define MAP_ROWS 20
+#define MAP_COLS 100
+#define MAP_ROWS 100
 #define MAP_CELL_SIZE 50
 #define MAP_SPRITE_FILE "%sassets/map.png"
 #define MAP_SPRITE_SIZE 32
 
-#define CAMERA_X_CELLS (MAP_COLS - 5)
-#define CAMERA_Y_CELLS (MAP_ROWS - 5)
+#define CAMERA_X_CELLS 20
+#define CAMERA_Y_CELLS 15
 
 #define WINDOW_WIDTH (CAMERA_X_CELLS * MAP_CELL_SIZE)
 #define WINDOW_HEIGHT (CAMERA_Y_CELLS * MAP_CELL_SIZE)

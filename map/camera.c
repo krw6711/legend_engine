@@ -5,7 +5,7 @@
 
 Camera_t camera = {
     {0,0,0,false, NONE},
-    0, 0,
+    40, 40,
     CAMERA_X_CELLS,CAMERA_Y_CELLS
 };
 

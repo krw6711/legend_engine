@@ -1,6 +1,6 @@
 #ifndef CAMERA_H
 #define CAMERA_H
-#include "map.h"
+#include "../global/globals.h"
 #include <stdbool.h>
 
 typedef struct{

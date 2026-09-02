@@ -52,7 +52,7 @@ void update_sprite(Player_t *object)
     if(object->move.moving)
     {
         object->sprite.coordinates.x = ((int)(SDL_GetTicks()/100) % (int)object->sprite.count) * MAP_SPRITE_SIZE;
-        SDL_Log("new sprite x %f", object->sprite.coordinates.x);
+        // SDL_Log("new sprite x %f", object->sprite.coordinates.x);
     }
 }
 

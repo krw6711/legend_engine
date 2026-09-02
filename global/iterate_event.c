@@ -1,6 +1,6 @@
 #include "globals.h"
 #include "iterate_event.h"
-#include "../entities/entity.h"
+#include "../entities/player.h"
 #include "../map/camera.h"
 
 void joystick_iterate_event(){
