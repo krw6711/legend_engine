@@ -4,6 +4,7 @@
 #include "./map/camera.h"
 #include "./global/iterate_event.h"
 #include "./entities/entity.h"
+#include "SDL3/SDL_init.h"
 #include "physics/velocity.h"
 
 #define SDL_MAIN_USE_CALLBACKS 1  /* use the callbacks instead of main() */
@@ -31,6 +32,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
     SDL_SetRenderVSync(renderer, 1);
 
     init_player();
+    if(init_entites()) return SDL_APP_FAILURE;
 
     return SDL_APP_CONTINUE;  /* carry on with the program! */
 }

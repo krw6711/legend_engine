@@ -1,7 +1,9 @@
 #include "map.h"
 #include <stdlib.h>
 #include "SDL3/SDL_log.h"
+#include "SDL3/SDL_render.h"
 #include "camera.h"
+#include "../entities/entity.h"
 
 // Make a large array for map meta info to access later
 Map_cell *map_info = NULL;
@@ -45,28 +47,43 @@ void map_load(void){
     for(int i = 0; i < (MAP_ROWS * MAP_COLS); i++){
         x = i % MAP_COLS;
         y = i / MAP_COLS;
-        if(x % 2){
-            map_info[i] = (Map_cell){
-                .sprite = {1*MAP_SPRITE_SIZE, 4*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
-                .tile = {(x)*MAP_CELL_SIZE, (y)*MAP_CELL_SIZE, MAP_CELL_SIZE, MAP_CELL_SIZE},
-                .type = GROUND,
-                .id = -1
-            };
-        }else if(y % 6){
-            map_info[i] = (Map_cell){
-                .sprite = {2*MAP_SPRITE_SIZE, 4*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
-                .tile = {(x)*MAP_CELL_SIZE, (y)*MAP_CELL_SIZE, MAP_CELL_SIZE, MAP_CELL_SIZE},
-                .type = WALL,
-                .id = -1
-            };
-        }else{
-            map_info[i] = (Map_cell){
-                .sprite = {4*MAP_SPRITE_SIZE, 4*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
-                .tile = {(x)*MAP_CELL_SIZE, (y)*MAP_CELL_SIZE, MAP_CELL_SIZE, MAP_CELL_SIZE},
-                .type = GROUND,
-                .id = -1
-            };
+
+        int sx = 4, sy = 4, id = -1;
+        Entity_types_t type = GROUND;
+
+        if(x ==  0 || y == 0 || x == (MAP_ROWS - 1) || y == (MAP_COLS - 1)){
+            sx = 2; type = WALL;
         }
+        
+        if(x == 34 || x == 68 || y == 34 || y == 68)
+        {
+            sx = 5; type = WALL;
+        }
+
+        if(y == 34 || y == 68 ){
+            sx = 4; sy = 5;
+        }
+
+        if(
+            ( x == 34 && y == 17) || ( x == 68 && y == 17) || (x==85 && y==34) ||
+            ( x == 34 && y == 51) || ( x == 68 && y == 51) ||
+            ( x == 16 && y == 68) || ( x == 51 && y == 68) || (x==85 && y == 68) ||
+            ( x == 34 && y == 85)
+        ) {
+            sx = 4; type = GROUND;
+        }
+
+        if((x == 52 && y ==52) || (x == 60 && y == 50) || (x == 40 && y == 55)){
+            id = 0; type = ENTITY; sx = 4; sy = 4;
+        }
+
+        map_info[i] = (Map_cell){
+            .sprite = {sx*MAP_SPRITE_SIZE, sy*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
+            .tile = {(x)*MAP_CELL_SIZE, (y)*MAP_CELL_SIZE, MAP_CELL_SIZE, MAP_CELL_SIZE},
+            .type = type,
+            .id = id
+        };
+
     }
 
 }
@@ -100,6 +117,10 @@ int map_render(void){
         };
         x++;
         SDL_RenderTexture(renderer, map_texture, &map_info[index].sprite, &screen_position);
+        if(map_info[index].type == ENTITY && map_info[index].id > -1)
+        {
+            SDL_RenderTexture(renderer, map_texture, &entities[map_info[index].id].sprite , &screen_position);
+        }
     }
     return 0;
 }
