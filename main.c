@@ -6,6 +6,8 @@
 #include "./entities/entity.h"
 #include "dialogs/dialogs.h"
 #include "physics/velocity.h"
+#include <SDL3/SDL_init.h>
+#include <stdlib.h>
 
 #define SDL_MAIN_USE_CALLBACKS 1  /* use the callbacks instead of main() */
 #include <SDL3/SDL_main.h>
@@ -30,6 +32,22 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
     }
 
     SDL_SetRenderVSync(renderer, 1);
+
+    if (!TTF_Init()) {
+        SDL_Log("Couldn't initialize SDL_ttf: %s\n", SDL_GetError());
+        return SDL_APP_FAILURE;
+    }
+
+    float font_size = 18.0;
+    /* Open the font */
+    char* font_path = get_full_path("/assets/osifont.ttf");
+    if(font_path == NULL) return SDL_APP_FAILURE;
+    font = TTF_OpenFont(font_path, font_size);
+    if (!font) {
+        SDL_Log("Couldn't open font: %s\n", SDL_GetError());
+        return SDL_APP_FAILURE;
+    }
+    free(font_path); font_path = NULL;
 
     init_player();
 
@@ -65,19 +83,6 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
         if(event->key.key == SDLK_X){
             do_action();
         }
-        // if (event->key.key == SDLK_UP){
-        //     move_player(UP);
-        // }
-        // if (event->key.key == SDLK_DOWN)
-        // {
-        //     move_player(DOWN);
-        // }
-        // if (event->key.key == SDLK_RIGHT){
-        //     move_player(RIGHT);
-        // }
-        // if (event->key.key == SDLK_LEFT){
-        //     move_player(LEFT);
-        // }
     }
     return SDL_APP_CONTINUE;  /* carry on with the program! */
 }

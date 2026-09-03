@@ -33,6 +33,11 @@ int clean_heaps(void){
 
     if(dialogs) free(dialogs);
 
+    if (font) {
+        TTF_CloseFont(font);
+    }
+    TTF_Quit();
+    
     if(window) SDL_DestroyWindow(window);
     if(renderer) SDL_DestroyRenderer(renderer);
     window = NULL;

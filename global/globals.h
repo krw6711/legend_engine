@@ -2,6 +2,7 @@
 #define GLOBALS_H
 
 #include <SDL3/SDL.h>
+#include <SDL3_ttf/SDL_ttf.h>
 
 #define MAP_COLS 100
 #define MAP_ROWS 100
@@ -33,6 +34,7 @@ extern SDL_Renderer *renderer;
 extern SDL_Joystick *joystick;
 extern SDL_AudioStream *music;
 extern SDL_AudioStream *sfx;
+extern TTF_Font *font;
 
 char* get_full_path(char* relativePath);
 
