@@ -43,5 +43,6 @@ Face_t is_move_camera_with_player(Coordinates_t new_coord);
 Coordinates_t get_new_index();
 int update_position();
 void move_player(Face_t face);
+void do_action(void);
 
 #endif

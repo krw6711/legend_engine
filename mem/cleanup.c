@@ -3,6 +3,7 @@
 #include "../map/map.h"
 #include <stdlib.h>
 #include "../entities/entity.h"
+#include "../dialogs/dialogs.h"
 
 int clean_heaps(void){
     // Free SDL Stuff
@@ -29,6 +30,8 @@ int clean_heaps(void){
 
     if(entities) free(entities);
     entities = NULL;
+
+    if(dialogs) free(dialogs);
 
     if(window) SDL_DestroyWindow(window);
     if(renderer) SDL_DestroyRenderer(renderer);

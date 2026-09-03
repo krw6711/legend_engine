@@ -73,10 +73,27 @@ void map_load(void){
             sx = 4; type = GROUND;
         }
 
-        if((x == 52 && y ==52) || (x == 60 && y == 50) || (x == 40 && y == 55)){
+        if((x == 52 && y ==52)){
             id = 0; type = ENTITY; sx = 4; sy = 4;
         }
+        
+        if((x == 60 && y == 50)){
+            id = 1; type = ENTITY; sx = 4; sy = 4;
+        }
+        
+        if((x == 53 && y == 55)){
+            id = 3; type = ENTITY; sx = 4; sy = 4;
+        }
 
+        
+        if((x == 49 && y == 55)){
+            id = 4; type = ENTITY; sx = 4; sy = 4;
+        }
+        
+        if((x == 51 && y == 55)){
+            id = 2; type = ENTITY; sx = 4; sy = 4;
+        }
+        
         map_info[i] = (Map_cell){
             .sprite = {sx*MAP_SPRITE_SIZE, sy*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
             .tile = {(x)*MAP_CELL_SIZE, (y)*MAP_CELL_SIZE, MAP_CELL_SIZE, MAP_CELL_SIZE},

@@ -22,6 +22,7 @@ add_executable(main WIN32
     ./global/iterate_event.c
     ./entities/player.c
     ./entities/entity.c
+    ./dialogs/dialogs.c
 )
 
 # target_compile_options(main PRIVATE -fsanitize=address -g)
@@ -32,3 +33,4 @@ add_executable(main WIN32
 target_link_libraries(main PRIVATE SDL3::SDL3 m)
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/assets/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/assets/)
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/assets/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug/assets/)

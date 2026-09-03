@@ -5,6 +5,7 @@
 #include "./global/iterate_event.h"
 #include "./entities/entity.h"
 #include "SDL3/SDL_init.h"
+#include "dialogs/dialogs.h"
 #include "physics/velocity.h"
 
 #define SDL_MAIN_USE_CALLBACKS 1  /* use the callbacks instead of main() */
@@ -33,6 +34,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
 
     init_player();
     if(init_entites()) return SDL_APP_FAILURE;
+    if(init_dialogs()) return SDL_APP_FAILURE;
 
     return SDL_APP_CONTINUE;  /* carry on with the program! */
 }
@@ -60,6 +62,9 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
     }
 
     if (event->type == SDL_EVENT_KEY_DOWN) {
+        if(event->key.key == SDLK_X){
+            do_action();
+        }
         // if (event->key.key == SDLK_UP){
         //     move_player(UP);
         // }

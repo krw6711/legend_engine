@@ -1,3 +1,4 @@
+#include "SDL3/SDL_scancode.h"
 #include "globals.h"
 #include "iterate_event.h"
 #include "../entities/player.h"
@@ -52,4 +53,8 @@ void keyboard_iterate_events(){
         // start_moving_camera(RIGHT);
         move_player(RIGHT);
     }
+
+    // if (keys[SDL_SCANCODE_X]){
+    //     do_action();
+    // }
 }

@@ -22,13 +22,11 @@ void start_moving_camera(Face_t dir){
 }
 void stop_moving_camera(void){
     if(camera.move.moving){
-        SDL_Log("no moves");
         camera.move.moving = false;
         camera.move.last_time = 0;
         camera.move.passed = 0;
     }
     if(camera.move.queued != NONE && !camera.move.moving){
-        SDL_Log("a queued movment is moving");
         start_moving_camera(camera.move.queued);
     }
 };
