@@ -89,9 +89,11 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
 
 SDL_AppResult SDL_AppIterate(void *appstate)
 {
-    joystick_iterate_event();
-    keyboard_iterate_events();
-    
+    if(!current_dialog.rendering){
+        joystick_iterate_event();
+        keyboard_iterate_events();
+    }
+
     moving_camera();
     move(player);
 
@@ -101,7 +103,12 @@ SDL_AppResult SDL_AppIterate(void *appstate)
     // render the built map
     map_render();
 
+    // render player
     render_player();
+
+    // render dialogs
+    render_current_dialog();
+
     // output on the screen
     SDL_RenderPresent(renderer);
 

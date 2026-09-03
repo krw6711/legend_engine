@@ -5,7 +5,6 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include "../dialogs/dialogs.h"
-#include "SDL3/SDL_log.h"
 #include "entity.h"
 
 Player_t *player = NULL;
@@ -147,10 +146,13 @@ void do_action()
 {
     Coordinates_t new_coord = get_new_index();
 
-    if(new_coord.index >= 0 && new_coord.index < (MAP_COLS * MAP_ROWS)){
+    if(current_dialog.rendering){
+        dialog_event_handler();
+    }else if(new_coord.index >= 0 && new_coord.index < (MAP_COLS * MAP_ROWS)){
         if(map_info[new_coord.index].type == ENTITY && map_info[new_coord.index].id != -1)
         {
             redner_dialog_by_id(entities[map_info[new_coord.index].id].dialog_id);
         }
-    } 
+    }
+    
 }

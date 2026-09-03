@@ -1,11 +1,17 @@
 #include "dialogs.h"
 #include "../global/globals.h"
+#include "SDL3/SDL_log.h"
+#include "SDL3/SDL_pixels.h"
+#include "SDL3/SDL_rect.h"
+#include "SDL3/SDL_render.h"
+#include "SDL3_ttf/SDL_ttf.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 
 char *dialogs;
 long file_length;
+Current_Dialog_t current_dialog;
 
 int init_dialogs(void)
 {
@@ -37,6 +43,13 @@ int init_dialogs(void)
     file_length = fileSize + 1;
 
     fclose(pFile);
+
+    current_dialog = (Current_Dialog_t){
+        .is_end = false,
+        .rendering = false,
+        .sprite = {0, 0, 0, 0},
+        .text_texture = NULL
+    };
 
     return 0;
 }
@@ -88,5 +101,70 @@ int redner_dialog_by_id(int id)
 
     SDL_Log("dialog: %s", dialog);
 
+    SDL_Color color = { 255, 255, 255, SDL_ALPHA_OPAQUE };
+    SDL_Surface *text;
+
+    text = TTF_RenderText_Blended_Wrapped(font, dialog, 0, color, DIALOG_WIDTH);
+    if (text) {
+        current_dialog.text_texture = SDL_CreateTextureFromSurface(renderer, text);
+        SDL_DestroySurface(text);
+    }
+    if (!current_dialog.text_texture) {
+        SDL_Log("Couldn't create text: %s\n", SDL_GetError());
+        return 1;
+    }
+
+    current_dialog.rendering = true;
+    if((current_dialog.sprite.y + current_dialog.sprite.h) >= current_dialog.text_texture->h ){
+        current_dialog.is_end = true;
+    }
+
+    current_dialog.sprite = (SDL_FRect){
+        .x = 0, .y = 0,
+        .w = current_dialog.text_texture->w,
+        .h = TTF_GetFontLineSkip(font)*3
+    };
     return 0;
+}
+
+void render_current_dialog()
+{
+    if(current_dialog.rendering){
+        SDL_FRect dst = {
+            .x = 0, .y = 0,
+            .w = DIALOG_WIDTH + 300 , .h = TTF_GetFontLineSkip(font)*3 + 100
+        };
+        SDL_SetRenderDrawColor( renderer,90, 90, 90, 90);
+        SDL_RenderFillRect(renderer, &dst);
+        dst.x += 200;
+        dst.y += 50;
+        dst.w = current_dialog.sprite.w;
+        if(TTF_GetFontLineSkip(font)*3 > current_dialog.text_texture->h){
+            dst.h = current_dialog.text_texture->h;
+        }else{
+            dst.h = TTF_GetFontLineSkip(font)*3;
+        }
+        SDL_RenderTexture(renderer, current_dialog.text_texture, &current_dialog.sprite, &dst);
+    }
+}
+
+void destroy_dialog()
+{
+    current_dialog.rendering = false;
+    current_dialog.is_end = false;
+    current_dialog.sprite = (SDL_FRect){0, 0, 0, 0};
+    SDL_DestroyTexture(current_dialog.text_texture);
+    current_dialog.text_texture = NULL;
+}
+
+void dialog_event_handler(){
+    if(current_dialog.rendering){
+        if((current_dialog.sprite.y + current_dialog.sprite.h) >= current_dialog.text_texture->h ){
+            current_dialog.is_end = true;
+        }
+    }
+    if(current_dialog.is_end){
+        destroy_dialog();
+    }
+    current_dialog.sprite.y += current_dialog.sprite.h;
 }

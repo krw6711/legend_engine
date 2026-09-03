@@ -32,6 +32,10 @@ int clean_heaps(void){
     entities = NULL;
 
     if(dialogs) free(dialogs);
+    dialogs = NULL;
+            
+    if(current_dialog.text_texture) SDL_DestroyTexture(current_dialog.text_texture);
+    current_dialog.text_texture = NULL;
 
     if (font) {
         TTF_CloseFont(font);

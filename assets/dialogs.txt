@@ -1,4 +1,4 @@
 Hi this is the first dialog!
 This is the secound one!
 and yeah Yet Another Dialog!
-LOL!
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam dui nulla, sodales et molestie ut, posuere nec diam. Nulla neque mauris, eleifend ac tincidunt vel, molestie a nunc. Aliquam euismod diam at sapien rhoncus suscipit. Vivamus est magna, volutpat sed luctus non, molestie interdum nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent quis mi at enim dignissim dignissim id vel sem. In commodo varius convallis. Nam luctus ornare massa, quis bibendum ex congue in. 
