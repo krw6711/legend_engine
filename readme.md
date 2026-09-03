@@ -24,6 +24,7 @@ message to you!
 to run this use
 ```sh
 git clone https://github.com/libsdl-org/SDL.git vendored/SDL
+git clone https://github.com/libsdl-org/SDL_ttf vendored/SDL_tff
 cmake -S . -B build && cmake --build build && gdb ./build/Debug/main
 ```
 
