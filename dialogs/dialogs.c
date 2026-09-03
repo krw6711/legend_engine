@@ -1,5 +1,5 @@
 #include "dialogs.h"
-#include "SDL3/SDL_log.h"
+#include "../global/globals.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -9,7 +9,12 @@ long file_length;
 
 int init_dialogs(void)
 {
-    FILE *pFile = fopen("./assets/dialogs.txt", "r");
+    char* full_path = get_full_path("/assets/dialogs.txt");
+    
+    FILE *pFile = fopen(full_path, "r");
+
+    free(full_path);
+    full_path = NULL;
 
     if(pFile == NULL){
         return 1;

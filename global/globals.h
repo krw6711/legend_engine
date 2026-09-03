@@ -34,4 +34,6 @@ extern SDL_Joystick *joystick;
 extern SDL_AudioStream *music;
 extern SDL_AudioStream *sfx;
 
+char* get_full_path(char* relativePath);
+
 #endif 
