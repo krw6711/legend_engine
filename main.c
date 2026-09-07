@@ -5,6 +5,8 @@
 #include "./global/iterate_event.h"
 #include "./entities/entity.h"
 #include "dialogs/dialogs.h"
+#include "entities/npc.h"
+#include "game/actions.h"
 #include "physics/velocity.h"
 #include <SDL3/SDL_init.h>
 #include <stdlib.h>
@@ -47,12 +49,14 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
         SDL_Log("Couldn't open font: %s\n", SDL_GetError());
         return SDL_APP_FAILURE;
     }
-    free(font_path); font_path = NULL;
+    SDL_free(font_path); font_path = NULL;
 
     init_player();
 
     if(init_entites()) return SDL_APP_FAILURE;
     if(init_dialogs()) return SDL_APP_FAILURE;
+    if(init_functions()) return SDL_APP_FAILURE;
+    if(init_npcs()) return SDL_APP_FAILURE;
 
     return SDL_APP_CONTINUE;  /* carry on with the program! */
 }
@@ -118,7 +122,7 @@ SDL_AppResult SDL_AppIterate(void *appstate)
 void SDL_AppQuit(void *appstate, SDL_AppResult result)
 {
     if(clean_heaps()){
-        SDL_Log("Error in freeing up memory, happy memory leak!");
+        SDL_Log("Error in SDL_freeing up memory, happy memory leak!");
     }
 
     /* SDL will clean up the window/renderer for us. */

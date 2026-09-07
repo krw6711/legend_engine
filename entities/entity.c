@@ -6,7 +6,7 @@ Entity_t *entities = NULL;
 
 int init_entites()
 {
-    entities = malloc(sizeof(Entity_t) * 7);
+    entities = SDL_malloc(sizeof(Entity_t) * 7);
     if(entities == NULL)
     {
         SDL_Log("Error Allocating memory for Entites");

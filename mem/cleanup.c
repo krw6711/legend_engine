@@ -4,9 +4,12 @@
 #include <stdlib.h>
 #include "../entities/entity.h"
 #include "../dialogs/dialogs.h"
+#include "../global/dynamic_array.h"
+#include "../game/actions.h"
+#include "../entities/npc.h"
 
 int clean_heaps(void){
-    // Free SDL Stuff
+    // SDL_free SDL Stuff
     if(music){
         SDL_DestroyAudioStream(music);
     }
@@ -18,20 +21,20 @@ int clean_heaps(void){
     if(joystick) SDL_CloseJoystick(joystick);
     joystick = NULL;
 
-    // Free Map
-    free(map_info);
+    // SDL_free Map
+    SDL_free(map_info);
     map_info = NULL;
 
     if(map_texture) SDL_DestroyTexture(map_texture);
     map_texture = NULL;
 
-    if(player) free(player);
+    if(player) SDL_free(player);
     player = NULL;
 
-    if(entities) free(entities);
+    if(entities) SDL_free(entities);
     entities = NULL;
 
-    if(dialogs) free(dialogs);
+    if(dialogs) SDL_free(dialogs);
     dialogs = NULL;
             
     if(current_dialog.text_texture) SDL_DestroyTexture(current_dialog.text_texture);
@@ -42,6 +45,14 @@ int clean_heaps(void){
     }
     TTF_Quit();
     
+    // SDL_free_darray(&functions);
+
+    if(npcs) SDL_free(npcs);
+    npcs = NULL;
+
+    if(functions) SDL_free(functions);
+    functions = NULL;
+
     if(window) SDL_DestroyWindow(window);
     if(renderer) SDL_DestroyRenderer(renderer);
     window = NULL;

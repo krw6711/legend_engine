@@ -6,12 +6,14 @@
 #include <stdlib.h>
 #include "../dialogs/dialogs.h"
 #include "entity.h"
+#include "./npc.h"
+#include "../game/actions.h"
 
 Player_t *player = NULL;
 
 int init_player()
 {
-    player = malloc(sizeof(Player_t));
+    player = SDL_malloc(sizeof(Player_t));
     if(player == NULL){
         return 1;
     }
@@ -152,6 +154,13 @@ void do_action()
         if(map_info[new_coord.index].type == ENTITY && map_info[new_coord.index].id != -1)
         {
             redner_dialog_by_id(entities[map_info[new_coord.index].id].dialog_id);
+        }
+        if(map_info[new_coord.index].type == NPC && map_info[new_coord.index].id != -1)
+        {
+            redner_dialog_by_id(npcs[map_info[new_coord.index].id].dialog_id);
+            if(npcs[map_info[new_coord.index].id].callback >= 0){
+                functions[npcs[map_info[new_coord.index].id].callback]();
+            }
         }
     }
     

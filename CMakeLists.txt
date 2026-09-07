@@ -51,13 +51,17 @@ add_executable(main WIN32
     main.c 
     ./mem/cleanup.c 
     ./global/globals.c 
+    ./global/dynamic_array.c 
     ./map/map.c
     ./map/camera.c
     ./physics/velocity.c
     ./global/iterate_event.c
     ./entities/player.c
     ./entities/entity.c
+    ./entities/npc.c
     ./dialogs/dialogs.c
+    ./game/actions.c
+    ./game/custom_actions.c
 )
 
 # target_compile_options(main PRIVATE -fsanitize=address -g)

@@ -15,7 +15,7 @@ int init_dialogs(void) {
 
   FILE *pFile = fopen(full_path, "r");
 
-  free(full_path);
+  SDL_free(full_path);
   full_path = NULL;
 
   if (pFile == NULL) {
@@ -26,7 +26,7 @@ int init_dialogs(void) {
   unsigned long fileSize = ftell(pFile); // get current file pointer
   fseek(pFile, 0, SEEK_SET);             // seek back to beginning of file
 
-  dialogs = malloc(fileSize + 1);
+  dialogs = SDL_malloc(fileSize + 1);
 
   if (dialogs == NULL) {
     fclose(pFile);

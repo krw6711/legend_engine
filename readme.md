@@ -4,7 +4,7 @@ message to you!
 >I am really happy to announce that our ambitous project is on his way to be production ready very soon!
 >I guess I need more 2 weeks till I can ship a real working game
 >
->So I am inviting you to join me the journy, if you are interested or want to share with your skills, the project is community driven and free for all, we believe on opensource 
+>So I am inviting you to join me the journy, if you are interested or want to share with your skills, the project is community driven and SDL_free for all, we believe on opensource 
 >
 >The current project that I am working on is a Game Engine based on C and SDL3, follows the data driven approche so it will be easy to do development on it!
 >
@@ -44,7 +44,7 @@ yeah I did rm -rf .git by mistake :))))))
 
 
 ## resources
-- map srpitesheet: https://opengameart.org/content/lots-of-free-2d-tiles-and-sprites-by-hyptosis
+- map srpitesheet: https://opengameart.org/content/lots-of-SDL_free-2d-tiles-and-sprites-by-hyptosis
 
 
 this is some ai slop about commits lol

@@ -12,7 +12,7 @@ SDL_Texture *map_frame =  NULL;
 
 // initialize map array
 int map_mem_init(void){
-    map_info = malloc(MAP_ROWS * MAP_COLS * sizeof(Map_cell));
+    map_info = SDL_malloc(MAP_ROWS * MAP_COLS * sizeof(Map_cell));
     return 0;
 }
 
@@ -93,7 +93,7 @@ void map_load(void){
         }
         
         if((x == 51 && y == 55)){
-            id = 2; type = ENTITY; sx = 4; sy = 4;
+            id = 0; type = NPC; sx = 4; sy = 4;
         }
         
         if(x ==  0 || y == 0 || x == (MAP_ROWS - 1) || y == (MAP_COLS - 1)){
@@ -139,11 +139,13 @@ int map_render(void){
             .w = map_info[index].tile.w
         };
         x++;
+
         SDL_RenderTexture(renderer, map_texture, &map_info[index].sprite, &screen_position);
-        if(map_info[index].type == ENTITY && map_info[index].id > -1)
+        if(map_info[index].type != GROUND && map_info[index].id > -1)
         {
             SDL_RenderTexture(renderer, map_texture, &entities[map_info[index].id].sprite , &screen_position);
         }
+        
     }
     return 0;
 }
