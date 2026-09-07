@@ -18,11 +18,24 @@ extern char *dialogs;
 extern Current_Dialog_t current_dialog;
 
 int init_dialogs(void);
-int get_dialog_cursor_by_id(int id);
-int get_dialog_length_by_cursor(int cursor);
+
+static int get_dialog_cursor_by_id(int id);
+static int get_dialog_length_by_cursor(int cursor);
+
 int redner_dialog_by_id(int id);
-void destroy_dialog(void);
-int dialog_to_texture(void);
+
+static void render_dialog_box();
+
+static void output_dialog(SDL_FRect *dst);
+static void render_letter_by_time(SDL_FRect *dst);
+static void render_printed_lines();
+static void render_current_line();
+static void render_arrow();
+
+static void destroy_dialog(void);
+static void move_dialog_offset();
+
+static int dialog_to_texture(void);
 void render_current_dialog(void);
 void dialog_event_handler(void);
 

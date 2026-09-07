@@ -2,8 +2,6 @@
 #include "../global/globals.h"
 #include "../map/map.h"
 #include "../entities/entity.h"
-#include "SDL3/SDL_log.h"
-#include "SDL3/SDL_rect.h"
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -127,7 +125,8 @@ int redner_dialog_by_id(int id) {
   return 0;
 }
 
-void render_dialog_box() {
+void render_dialog_box()
+{
   SDL_FRect dst = {.x = 0,
                    .y = 0,
                    .w = MAP_CELL_SIZE * CAMERA_X_CELLS,
@@ -141,7 +140,8 @@ void output_dialog(SDL_FRect *dst)
     SDL_RenderTexture(renderer, current_dialog.text_texture, &current_dialog.sprite, dst);
 }
 
-void render_letter_by_time(SDL_FRect *dst) {
+void render_letter_by_time(SDL_FRect *dst)
+{
     float now = (float)SDL_GetTicks() / 1000.0f;
     if (now - current_dialog.last_time >= 0.05){
         current_dialog.sprite.w += 20;
@@ -175,13 +175,15 @@ void render_current_line()
     output_dialog(&dst);
 }
 
-void render_arrow(){
+void render_arrow()
+{
     SDL_FRect src = {0*MAP_SPRITE_SIZE, 6*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE}, 
     dst = {250, 3 * TTF_GetFontLineSkip(font) + 50, MAP_CELL_SIZE, MAP_CELL_SIZE};
     SDL_RenderTexture(renderer, map_texture, &src, &dst);
 }
 
-void render_current_dialog() {
+void render_current_dialog()
+{
     if (!current_dialog.rendering) return;
     // SDL_Log("Rendering Box!");
     
@@ -211,7 +213,8 @@ void render_current_dialog() {
     render_current_line();
 }
 
-void destroy_dialog() {
+void destroy_dialog()
+{
   current_dialog.rendering = false;
   current_dialog.is_end = false;
   current_dialog.sprite = (SDL_FRect){0, 0, 0, 0};
