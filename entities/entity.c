@@ -6,7 +6,7 @@ Entity_t *entities = NULL;
 
 int init_entites()
 {
-    entities = malloc(sizeof(Entity_t) * 5);
+    entities = malloc(sizeof(Entity_t) * 7);
     if(entities == NULL)
     {
         SDL_Log("Error Allocating memory for Entites");
@@ -36,6 +36,16 @@ int init_entites()
     entities[4] = (Entity_t){
         .sprite = {3*MAP_SPRITE_SIZE, 5*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
         .dialog_id = 2
+    };
+
+    entities[5] = (Entity_t){
+        .sprite = {6*MAP_SPRITE_SIZE, 6*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
+        .dialog_id = 4
+    };
+
+    entities[6] = (Entity_t){
+        .sprite = {6*MAP_SPRITE_SIZE, 6*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
+        .dialog_id = 5
     };
     return 0;
 }

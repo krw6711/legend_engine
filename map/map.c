@@ -51,13 +51,15 @@ void map_load(void){
         int sx = 4, sy = 4, id = -1;
         Entity_types_t type = GROUND;
 
-        if(x ==  0 || y == 0 || x == (MAP_ROWS - 1) || y == (MAP_COLS - 1)){
-            sx = 2; type = WALL;
+        
+        if(y == 34 || y == 68)
+        {
+            sx = 5; type = ENTITY; id = 5;
         }
         
-        if(x == 34 || x == 68 || y == 34 || y == 68)
+        if(x == 34 || x == 68)
         {
-            sx = 5; type = WALL;
+            sx = 5; type = ENTITY; id = 6;
         }
 
         if(y == 34 || y == 68 ){
@@ -84,7 +86,7 @@ void map_load(void){
         if((x == 53 && y == 55)){
             id = 3; type = ENTITY; sx = 4; sy = 4;
         }
-
+        
         
         if((x == 49 && y == 55)){
             id = 4; type = ENTITY; sx = 4; sy = 4;
@@ -94,6 +96,10 @@ void map_load(void){
             id = 2; type = ENTITY; sx = 4; sy = 4;
         }
         
+        if(x ==  0 || y == 0 || x == (MAP_ROWS - 1) || y == (MAP_COLS - 1)){
+            sx = 2; type = ENTITY; id = 6;
+        }
+
         map_info[i] = (Map_cell){
             .sprite = {sx*MAP_SPRITE_SIZE, sy*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
             .tile = {(x)*MAP_CELL_SIZE, (y)*MAP_CELL_SIZE, MAP_CELL_SIZE, MAP_CELL_SIZE},
