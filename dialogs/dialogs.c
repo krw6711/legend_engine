@@ -97,7 +97,7 @@ int redner_dialog_by_id(int id) {
   }
   dialog[len] = '\0';
 
-  SDL_Log("dialog: %s", dialog);
+//   SDL_Log("dialog: %s", dialog);
 
   SDL_Color color = {255, 255, 255, SDL_ALPHA_OPAQUE};
   SDL_Surface *text;
