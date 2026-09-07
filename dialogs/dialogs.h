@@ -4,16 +4,17 @@
 #include "../global/globals.h"
 
 #define DIALOGS_AMOUNT 5
-#define DIALOG_WIDTH 500
+#define DIALOG_WIDTH ((MAP_CELL_SIZE * CAMERA_X_CELLS) - 300)
 
 typedef struct {
     SDL_Texture *text_texture;
     SDL_FRect sprite;
-    bool rendering, is_end;
+    bool rendering, is_end_page, is_end;
+    int rendering_line, offset;
+    float last_time;
 } Current_Dialog_t;
 
 extern char *dialogs;
-extern long file_length;
 extern Current_Dialog_t current_dialog;
 
 int init_dialogs(void);
