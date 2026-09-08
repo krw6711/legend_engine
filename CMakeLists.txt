@@ -59,6 +59,7 @@ add_executable(main WIN32
     ./entities/player.c
     ./entities/entity.c
     ./entities/npc.c
+    ./entities/items.c
     ./dialogs/dialogs.c
     ./game/actions.c
     ./game/custom_actions.c
