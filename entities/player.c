@@ -139,7 +139,7 @@ int load_save_file()
 
 int init_player()
 {
-    if(!load_save_file()) return 1;
+    if(load_save_file()) return 1;
     camera.c_x = player->x - 10;
     camera.c_y = player->y - 10;
     return 0;
