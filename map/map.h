@@ -4,6 +4,8 @@
 #include "../entities/player.h"
 #include <stdbool.h>
 
+typedef enum {GROUND, WALL, ENTITY, ITEM, NPC, BOSS} Entity_types_t;
+
 typedef struct {
     SDL_FRect sprite;
     SDL_FRect tile;
