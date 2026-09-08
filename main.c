@@ -6,6 +6,7 @@
 #include "./entities/entity.h"
 #include "dialogs/dialogs.h"
 #include "entities/npc.h"
+#include "entities/player.h"
 #include "game/actions.h"
 #include "physics/velocity.h"
 #include <SDL3/SDL_init.h>
@@ -51,7 +52,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
     }
     SDL_free(font_path); font_path = NULL;
 
-    init_player();
+    if(init_player()) return SDL_APP_FAILURE;
 
     if(init_entites()) return SDL_APP_FAILURE;
     if(init_dialogs()) return SDL_APP_FAILURE;
