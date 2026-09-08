@@ -7,6 +7,7 @@
 #include "../global/dynamic_array.h"
 #include "../game/actions.h"
 #include "../entities/npc.h"
+#include "SDL3/SDL_log.h"
 
 int clean_heaps(void){
     // SDL_free SDL Stuff
@@ -28,6 +29,7 @@ int clean_heaps(void){
     if(map_texture) SDL_DestroyTexture(map_texture);
     map_texture = NULL;
 
+    if(save_player_status()) SDL_Log("You lost your progress now you can cry XD");
     if(player) SDL_free(player);
     player = NULL;
 

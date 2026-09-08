@@ -21,6 +21,14 @@
 #define APP_ID "com.legend.engine.2d"
 #define APP_VERSION "0.1"
 
+#ifdef WIN32
+#include <io.h>
+#define F_OK 0
+#define access _access
+#else
+#include <unistd.h>
+#endif
+
 typedef enum {
     UP=1,
     DOWN=0, 

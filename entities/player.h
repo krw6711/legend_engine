@@ -4,8 +4,20 @@
 #include "../global/globals.h"
 #include "SDL3/SDL_rect.h"
 #include <stdbool.h>
+#include "./items.h"
 
-typedef enum {GROUND, WALL, ENTITY, ITEM, NPC, BOSS} Entity_types_t;
+#define PLAYER_SAVE_FILE_PATH "/save.bin"
+
+typedef struct {
+    int HP; // Health Points
+    int AT; // ATtack
+    int DF; // DeFence
+    int LK; // Luck
+    int EQW; // EQuiped Weapon id
+    int EQS; // EQuiped Shield id
+    Inventory_t inventory[50];
+    unsigned int index; // player possition
+} Status_t;
 
 typedef struct{
     bool moving;
@@ -21,27 +33,35 @@ typedef struct {
     int count, start_x, start_y;
 } Sprite_t;
 
+
+typedef struct {
+    int index, x, y;
+} Coordinates_t;
+
 typedef struct {
     int x, y;
     SDL_FRect tile;
     Sprite_t sprite;
     Movement_t move;
     Face_t face;
+    Status_t status;
 } Player_t;
-
-typedef struct {
-    int index, x, y;
-} Coordinates_t;
 
 extern Player_t *player;
 
-int init_player();
-void render_player();
-void update_face();
-bool is_walkable(Coordinates_t new_coord);
-Face_t is_move_camera_with_player(Coordinates_t new_coord);
-Coordinates_t get_new_index();
-int update_position();
+static int get_save_file(char* save_file_path);
+static int init_player_struct(void);
+static int creat_save_file(char* save_file_path);
+int save_player_status(void);
+static int load_save_file(void);
+
+int init_player(void);
+void render_player(void);
+static void update_face(void);
+static bool is_walkable(Coordinates_t new_coord);
+static Face_t is_move_camera_with_player(Coordinates_t new_coord);
+static Coordinates_t get_new_index(void);
+static int update_position(void);
 void move_player(Face_t face);
 void do_action(void);
 

@@ -1,6 +1,6 @@
 #include "./player.h"
-#include "../map/map.h"
 #include "../map/camera.h"
+#include "../map/map.h"
 #include "../physics/velocity.h"
 #include <stdbool.h>
 #include <stdlib.h>
@@ -11,12 +11,43 @@
 
 Player_t *player = NULL;
 
-int init_player()
+int get_save_file(char* save_file_path)
+{
+    FILE *pFile = fopen(save_file_path, "rb");
+
+    if(pFile == NULL){
+        SDL_Log("error reading the words file");
+        fclose(pFile);
+        return 1;
+    }
+    
+    fseek(pFile, 0, SEEK_END); // seek to end of file
+    int fileSize = ftell(pFile); // get current file pointer
+    fseek(pFile, 0, SEEK_SET); // seek back to beginning of file
+
+    player = malloc(fileSize);
+
+    if(player == NULL){
+        SDL_Log("error in loading the words file into the memory");
+        fclose(pFile);
+        return 1;
+    }
+
+    size_t bytesRead = fread(player, 1, fileSize, pFile);
+
+    fclose(pFile);
+
+    return 0;
+}
+
+int init_player_struct()
 {
     player = SDL_malloc(sizeof(Player_t));
+
     if(player == NULL){
         return 1;
     }
+
     player->x = 50;
     player->y = 50;
     player->face = DOWN;
@@ -35,6 +66,82 @@ int init_player()
         MAP_SPRITE_SIZE,
         MAP_SPRITE_SIZE
     };
+    player->status.AT = 5;
+    player->status.DF = 5;
+    player->status.EQS = -1;
+    player->status.EQW = -1;
+    player->status.HP = 20;
+    player->status.LK = 5;
+    player->status.index = player->x + player->y * MAP_ROWS;
+
+    return 0;
+}
+
+int creat_save_file(char* save_file_path)
+{
+    if(!player) init_player_struct();
+
+    FILE *pFile = fopen(save_file_path, "wb+");
+    if(!pFile){
+        SDL_Log("error creating save file");
+        fclose(pFile);
+        return 1;
+    }
+
+    fwrite(player, sizeof(Player_t), 1, pFile);
+    rewind(pFile);
+    fclose(pFile);
+
+    return 0;
+}
+
+int save_player_status()
+{
+    char* save_file_path = get_full_path(PLAYER_SAVE_FILE_PATH);
+    if(save_file_path == NULL){
+        SDL_Log("Error out of memory XP");
+        return 1;
+    }
+
+    FILE *pFile = fopen(save_file_path, "wb+");
+    if(!pFile){
+        SDL_Log("error creating save file");
+        fclose(pFile);
+        return 1;
+    }
+
+    fwrite(player, sizeof(Player_t), 1, pFile);
+    rewind(pFile);
+    fclose(pFile);
+
+    SDL_free(save_file_path); save_file_path = NULL;
+    return 0;
+
+}
+
+int load_save_file()
+{
+    char* save_file_path = get_full_path(PLAYER_SAVE_FILE_PATH);
+    if(save_file_path == NULL){
+        SDL_Log("Error out of memory XP");
+        return 1;
+    } 
+    
+    if(!access(save_file_path, F_OK)){
+        if(get_save_file(save_file_path)) return 1;
+    }else{
+        if(creat_save_file(save_file_path)) return 1;
+    }
+
+    SDL_free(save_file_path); save_file_path = NULL;
+    return 0;
+}
+
+int init_player()
+{
+    if(!load_save_file()) return 1;
+    camera.c_x = player->x - 10;
+    camera.c_y = player->y - 10;
     return 0;
 }
 
