@@ -60,5 +60,6 @@ int clean_heaps(void){
     window = NULL;
     renderer = NULL;
 
+    SDL_Log("cleaned up everything! happy memory free!");
     return 0;
 }
