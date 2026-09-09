@@ -1,10 +1,7 @@
 #include "system_events.h"
 #include "../entities/player.h"
-#include "SDL3/SDL_events.h"
-#include "SDL3/SDL_init.h"
-#include "SDL3/SDL_keycode.h"
-#include "SDL3/SDL_log.h"
 #include "globals.h"
+#include "../dialogs/dialogs.h"
 
 void joystick_connecting(SDL_Event *event)
 {
@@ -31,7 +28,7 @@ SDL_AppResult general_inputs(SDL_Event *event)
 {
     if (event->type != SDL_EVENT_KEY_DOWN && event->type != SDL_EVENT_JOYSTICK_BUTTON_DOWN) return SDL_APP_CONTINUE;
 
-    if(event->key.key == SDLK_Q || ((int)event->jbutton.button == 0)){
+    if((event->key.key == SDLK_Q || ((int)event->jbutton.button == 0))){
         save_player_status();
         SDL_Log("game statues saved!");
     }
@@ -67,7 +64,11 @@ void player_inputs(SDL_Event *event)
     if(event->type == SDL_EVENT_KEY_DOWN){
         if(event->key.key == SDLK_X){
             do_action();
-        }    
+        }
+        if(event->key.key == SDLK_Z && current_screen == GAME && !current_dialog.rendering){
+            SDL_Log("Start Inventory");
+            current_screen = INVENTORY;
+        }
     }
 }
 
@@ -75,6 +76,14 @@ void inventory_inputs(SDL_Event *event)
 {
     if(current_screen != INVENTORY) return;
     if (event->type != SDL_EVENT_KEY_DOWN && event->type != SDL_EVENT_JOYSTICK_BUTTON_DOWN) return;
+
+    if(event->type == SDL_EVENT_KEY_DOWN){
+        if(event->key.key == SDLK_C && current_screen == INVENTORY){
+            SDL_Log("stop Inventory");
+            destroy_inventory_textures();
+            current_screen = GAME;
+        }
+    }
 
     return;
 }

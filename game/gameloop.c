@@ -1,11 +1,13 @@
 #include "gameloop.h"
+
 #include "../global/globals.h"
+#include "../global/iterate_event.h"
 
 #include "../map/map.h"
 #include "../map/camera.h"
-#include "../global/iterate_event.h"
 #include "../dialogs/dialogs.h"
 #include "../entities/player.h"
+#include "../entities/items.h"
 #include "../physics/velocity.h"
 
 void current_rendering_screen()
@@ -66,7 +68,7 @@ static void game()
 
 static void inventory()
 {
-    return;
+    render_inventory_menu();
 }
 
 static void player_statues()
