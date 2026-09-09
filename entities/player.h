@@ -15,7 +15,7 @@ typedef struct {
     int LK; // Luck
     int EQW; // EQuiped Weapon id
     int EQS; // EQuiped Shield id
-    Inventory_t inventory[50];
+    Inventory_t inventory[20];
     unsigned int inventory_cusor;
     unsigned int index; // player possition
 } Status_t;
