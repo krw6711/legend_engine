@@ -102,14 +102,20 @@ int redner_dialog_by_id(int id, SDL_FRect *icon_sprite, int* callback) {
   SDL_Surface *text;
 
   text = TTF_RenderText_Blended_Wrapped(font, dialog, 0, color, DIALOG_WIDTH);
-  if (text) {
-    current_dialog.text_texture = SDL_CreateTextureFromSurface(renderer, text);
-    SDL_DestroySurface(text);
-  }
-  if (!current_dialog.text_texture) {
+  if (!text) {
     SDL_Log("Couldn't create text: %s\n", SDL_GetError());
     return 1;
   }
+  SDL_Texture *new_texture = SDL_CreateTextureFromSurface(renderer, text);
+  SDL_DestroySurface(text);
+  if (!new_texture) {
+    SDL_Log("Couldn't create text: %s\n", SDL_GetError());
+    return 1;
+  }
+  if (current_dialog.text_texture) {
+    SDL_DestroyTexture(current_dialog.text_texture);
+  }
+  current_dialog.text_texture = new_texture;
 
   if (icon_sprite) current_dialog.rendering = true;
   if (callback) current_dialog.callback = callback;
