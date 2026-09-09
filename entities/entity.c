@@ -34,7 +34,7 @@ int init_entites()
     };
 
     entities[4] = (Entity_t){
-        .sprite = {3*MAP_SPRITE_SIZE, 5*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
+        .sprite = {1*MAP_SPRITE_SIZE, 5*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
         .dialog_id = 2
     };
 

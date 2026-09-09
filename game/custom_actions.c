@@ -1,7 +1,8 @@
 #include "./custom_actions.h"
-#include "SDL3/SDL_log.h"
+#include "../dialogs/dialogs.h"
+#include "../entities/entity.h"
 
 void print_hello_world()
 {
-    SDL_Log("This is a Hello World from an action XD");
+    redner_dialog_by_id(7, &entities[3].sprite, NULL); 
 }

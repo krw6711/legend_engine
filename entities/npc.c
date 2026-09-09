@@ -13,7 +13,7 @@ int init_npcs()
 
     npcs[0] = (NPC_t){
         .sprite = { 3 * MAP_SPRITE_SIZE, 5 * MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
-        .dialog_id = 0,
+        .dialog_id = 6,
         .callback = 0
     };
 
