@@ -57,11 +57,17 @@ SDL_AppResult general_inputs(SDL_Event *event)
 void player_inputs(SDL_Event *event)
 {
     if(current_screen != GAME) return;
-    if (event->type != SDL_EVENT_KEY_DOWN && event->type != SDL_EVENT_JOYSTICK_BUTTON_DOWN) return;
+    
+    if(event->type == SDL_EVENT_JOYSTICK_BUTTON_DOWN){
+        if(((int)event->jbutton.button == 2)){
+            do_action();
+        }   
+    }
 
-
-    if(event->key.key == SDLK_X || ((int)event->jbutton.button == 2)){
-        do_action();
+    if(event->type == SDL_EVENT_KEY_DOWN){
+        if(event->key.key == SDLK_X){
+            do_action();
+        }    
     }
 }
 
