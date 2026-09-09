@@ -1,16 +1,18 @@
 #include "./global/globals.h"
+#include "./global/system_events.h"
+
 #include "./mem/cleanup.h"
+
 #include "./map/map.h"
-#include "./map/camera.h"
-#include "./global/iterate_event.h"
-#include "./entities/entity.h"
-#include "dialogs/dialogs.h"
+
 #include "entities/npc.h"
 #include "entities/player.h"
+#include "./entities/entity.h"
+
+#include "dialogs/dialogs.h"
+
 #include "game/actions.h"
-#include "physics/velocity.h"
-#include <SDL3/SDL_init.h>
-#include <stdlib.h>
+#include "./game/gameloop.h"
 
 #define SDL_MAIN_USE_CALLBACKS 1  /* use the callbacks instead of main() */
 #include <SDL3/SDL_main.h>
@@ -30,17 +32,14 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
     }
     SDL_SetRenderLogicalPresentation(renderer, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_LOGICAL_PRESENTATION_LETTERBOX);
 
-    if(map_init()){
-        return SDL_APP_FAILURE;
-    }
-
+    
     SDL_SetRenderVSync(renderer, 1);
-
+    
     if (!TTF_Init()) {
         SDL_Log("Couldn't initialize SDL_ttf: %s\n", SDL_GetError());
         return SDL_APP_FAILURE;
     }
-
+    
     float font_size = 18.0;
     /* Open the font */
     char* font_path = get_full_path("/assets/osifont.ttf");
@@ -51,15 +50,18 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
         return SDL_APP_FAILURE;
     }
     SDL_free(font_path); font_path = NULL;
-
+    
     current_screen = GAME;
+    
+    if(map_init()) return SDL_APP_FAILURE;
 
     if(init_player()) return SDL_APP_FAILURE;
-
     if(init_entites()) return SDL_APP_FAILURE;
-    if(init_dialogs()) return SDL_APP_FAILURE;
-    if(init_functions()) return SDL_APP_FAILURE;
     if(init_npcs()) return SDL_APP_FAILURE;
+
+    if(init_dialogs()) return SDL_APP_FAILURE;
+
+    if(init_functions()) return SDL_APP_FAILURE;
 
     return SDL_APP_CONTINUE;  /* carry on with the program! */
 }
@@ -69,59 +71,22 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
     if (event->type == SDL_EVENT_QUIT) {
         return SDL_APP_SUCCESS;  /* end the program, reporting success to the OS. */
     }
-    if (event->type == SDL_EVENT_JOYSTICK_ADDED) {
-        const SDL_JoystickID which = event->jdevice.which;
-        joystick = SDL_OpenJoystick(which);
-        if (!joystick) {
-            SDL_Log("Joystick #%u add, but not opened: %s", (unsigned int) which, SDL_GetError());
-        } else {
-            SDL_Log("Joystick #%u ('%s') added", (unsigned int) which, SDL_GetJoystickName(joystick));
-        }
-    } else if (event->type == SDL_EVENT_JOYSTICK_REMOVED) {
-        const SDL_JoystickID which = event->jdevice.which;
-        SDL_Joystick *joystick = SDL_GetJoystickFromID(which);
-        if (joystick) {
-            SDL_CloseJoystick(joystick);  /* the joystick was unplugged. */
-        }
-        SDL_Log( "Joystick #%u removed", (unsigned int) which);
-    }
 
-    if (event->type == SDL_EVENT_KEY_DOWN) {
-        if(event->key.key == SDLK_X){
-            do_action();
-        }
-    }
+    joystick_connecting(event);
+    player_inputs(event);
+    inventory_inputs(event);
+    
+    return general_inputs(event);
+
     return SDL_APP_CONTINUE;  /* carry on with the program! */
 }
 
 SDL_AppResult SDL_AppIterate(void *appstate)
 {
-    SDL_SetRenderDrawColor(renderer, 60, 60, 60, SDL_ALPHA_OPAQUE); // make a black-gray background
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE); // make a black-gray background
     SDL_RenderClear(renderer); // clear the canvas
     
-    if(current_screen == GAME){
-        if(!current_dialog.rendering){
-            joystick_iterate_event();
-            keyboard_iterate_events();
-        }
-    
-        moving_camera();
-        move(player);
-    
-        // render the built map
-        map_render();
-    
-        // render player
-        render_player();
-    
-        // render dialogs
-        render_current_dialog();
-    }
-
-    if(current_screen == INVENTORY)
-    {
-        
-    }
+    current_rendering_screen();
 
     // output on the screen
     SDL_RenderPresent(renderer);
