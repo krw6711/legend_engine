@@ -6,6 +6,7 @@ SDL_Joystick *joystick = NULL;
 SDL_AudioStream *music = NULL;
 SDL_AudioStream *sfx = NULL;
 TTF_Font *font = NULL;
+Menu_t current_screen;
 
 char* get_full_path(char* relativePath)
 {

@@ -29,6 +29,8 @@
 #include <unistd.h>
 #endif
 
+typedef enum { TILE_SCREEN, OPTIONS, GAME, INVENTORY, PLAYER_STATUS } Menu_t;
+
 typedef enum {
     UP=1,
     DOWN=0, 
@@ -43,6 +45,7 @@ extern SDL_Joystick *joystick;
 extern SDL_AudioStream *music;
 extern SDL_AudioStream *sfx;
 extern TTF_Font *font;
+extern Menu_t current_screen;
 
 char* get_full_path(char* relativePath);
 

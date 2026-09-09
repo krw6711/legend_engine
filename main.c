@@ -52,6 +52,8 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
     }
     SDL_free(font_path); font_path = NULL;
 
+    current_screen = GAME;
+
     if(init_player()) return SDL_APP_FAILURE;
 
     if(init_entites()) return SDL_APP_FAILURE;
@@ -94,25 +96,32 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
 
 SDL_AppResult SDL_AppIterate(void *appstate)
 {
-    if(!current_dialog.rendering){
-        joystick_iterate_event();
-        keyboard_iterate_events();
-    }
-
-    moving_camera();
-    move(player);
-
     SDL_SetRenderDrawColor(renderer, 60, 60, 60, SDL_ALPHA_OPAQUE); // make a black-gray background
     SDL_RenderClear(renderer); // clear the canvas
     
-    // render the built map
-    map_render();
+    if(current_screen == GAME){
+        if(!current_dialog.rendering){
+            joystick_iterate_event();
+            keyboard_iterate_events();
+        }
+    
+        moving_camera();
+        move(player);
+    
+        // render the built map
+        map_render();
+    
+        // render player
+        render_player();
+    
+        // render dialogs
+        render_current_dialog();
+    }
 
-    // render player
-    render_player();
-
-    // render dialogs
-    render_current_dialog();
+    if(current_screen == INVENTORY)
+    {
+        
+    }
 
     // output on the screen
     SDL_RenderPresent(renderer);
