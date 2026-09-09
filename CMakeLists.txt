@@ -10,14 +10,14 @@ find_package(Git REQUIRED)
 FetchContent_Declare(
     SDL3
     GIT_REPOSITORY https://github.com/libsdl-org/SDL.git
-    GIT_TAG        main
+    GIT_TAG        release-3.4.x
     SOURCE_DIR     "${CMAKE_CURRENT_LIST_DIR}/vendored/SDL"
 )   
 
 FetchContent_Declare(
     SD3_TTF
     GIT_REPOSITORY https://github.com/libsdl-org/SDL_ttf
-    GIT_TAG        main
+    GIT_TAG        release-3.2.x
     SOURCE_DIR     "${CMAKE_CURRENT_LIST_DIR}/vendored/SDL_ttf"
 ) 
 set(TARGET_DIR "${CMAKE_CURRENT_SOURCE_DIR}/vendored")
@@ -49,20 +49,29 @@ add_subdirectory(vendored/SDL_ttf EXCLUDE_FROM_ALL)
 # Create your game executable target as usual
 add_executable(main WIN32 
     main.c 
+
     ./mem/cleanup.c 
+
     ./global/globals.c 
     ./global/dynamic_array.c 
+    ./global/iterate_event.c
+    ./global/system_events.c
+
     ./map/map.c
     ./map/camera.c
+
     ./physics/velocity.c
-    ./global/iterate_event.c
+
     ./entities/player.c
     ./entities/entity.c
     ./entities/npc.c
     ./entities/items.c
+
     ./dialogs/dialogs.c
+
     ./game/actions.c
     ./game/custom_actions.c
+    ./game/gameloop.c
 )
 
 # target_compile_options(main PRIVATE -fsanitize=address -g)
