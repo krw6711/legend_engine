@@ -4,11 +4,13 @@
 #include "../global/globals.h"
 
 #define DIALOGS_AMOUNT 5
-#define DIALOG_WIDTH ((MAP_CELL_SIZE * CAMERA_X_CELLS) - 300)
+#define DIALOG_WIDTH ((MAP_CELL_SIZE * CAMERA_X_CELLS) - 200)
 
 typedef struct {
     SDL_Texture *text_texture;
     SDL_FRect sprite;
+    SDL_FRect *icon_sprite;
+    int *callback;
     bool rendering, is_end_page, is_end;
     int rendering_line, offset;
     float last_time;
@@ -22,7 +24,7 @@ int init_dialogs(void);
 static int get_dialog_cursor_by_id(int id);
 static int get_dialog_length_by_cursor(int cursor);
 
-int redner_dialog_by_id(int id);
+int redner_dialog_by_id(int id, SDL_FRect *icon_sprite, int *callback);
 
 static void render_dialog_box();
 

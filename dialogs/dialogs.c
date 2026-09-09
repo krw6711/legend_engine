@@ -1,10 +1,11 @@
 #include "dialogs.h"
 #include "../global/globals.h"
 #include "../map/map.h"
-#include "../entities/entity.h"
+#include "SDL3/SDL_rect.h"
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include "../game/actions.h"
 
 char *dialogs;
 static long file_length;
@@ -80,7 +81,7 @@ int get_dialog_length_by_cursor(int cursor) {
   return len;
 }
 
-int redner_dialog_by_id(int id) {
+int redner_dialog_by_id(int id, SDL_FRect *icon_sprite, int* callback) {
   int cursor = get_dialog_cursor_by_id(id);
   if (cursor == -1)
     return 1;
@@ -110,11 +111,13 @@ int redner_dialog_by_id(int id) {
     return 1;
   }
 
-  current_dialog.rendering = true;
+  if (icon_sprite) current_dialog.rendering = true;
+  if (callback) current_dialog.callback = callback;
 //   if ((current_dialog.sprite.y + current_dialog.sprite.h) >=
 //       current_dialog.text_texture->h) {
 //     current_dialog.is_end = true;
 //   }
+  current_dialog.icon_sprite = icon_sprite;
 
   current_dialog.sprite = (SDL_FRect){
       .x = 0,
@@ -127,12 +130,36 @@ int redner_dialog_by_id(int id) {
 
 void render_dialog_box()
 {
-  SDL_FRect dst = {.x = 0,
-                   .y = 0,
-                   .w = MAP_CELL_SIZE * CAMERA_X_CELLS,
-                   .h = 3 * TTF_GetFontLineSkip(font) + 100};
-  SDL_SetRenderDrawColor(renderer, 90, 90, 90, 50);
-  SDL_RenderFillRect(renderer, &dst);
+  SDL_FRect dst;
+  int h = TTF_GetFontLineSkip(font) * 3 + 100;
+  int w = CAMERA_X_CELLS * MAP_CELL_SIZE;
+  SDL_FRect src = {2*MAP_SPRITE_SIZE, 7*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE,MAP_SPRITE_SIZE};
+  dst.x = dst.y = 0;
+  dst.w = dst.h = (float)h / 2.0f;
+  SDL_RenderTexture(renderer, map_texture, &src, &dst);
+  dst.y += dst.h;
+  src.x = 3 * MAP_SPRITE_SIZE;
+  SDL_RenderTexture(renderer, map_texture, &src, &dst);
+  dst.y = 0;
+  dst.x = dst.w;
+  src.x = 0;
+  dst.w = w - dst.h * 2;
+  SDL_RenderTexture(renderer, map_texture, &src, &dst);
+  dst.y += dst.h;
+  dst.x = dst.h;
+  src.x = 5 * MAP_SPRITE_SIZE;
+  SDL_RenderTexture(renderer, map_texture, &src, &dst);
+  dst.x = w - dst.h;
+  src.x = 1 * MAP_SPRITE_SIZE;
+  dst.y = 0;
+  dst.w = dst.h;
+  SDL_RenderTexture(renderer, map_texture, &src, &dst);
+  dst.y = dst.h;
+  src.x = 4 * MAP_SPRITE_SIZE;
+  SDL_RenderTexture(renderer, map_texture, &src, &dst);
+  dst.x = dst.y = 25;
+  dst.w = dst.h = 100;
+  SDL_RenderTexture(renderer, map_texture, current_dialog.icon_sprite, &dst);
 }
 
 void output_dialog(SDL_FRect *dst)
@@ -153,7 +180,7 @@ void render_letter_by_time(SDL_FRect *dst)
 void render_printed_lines()
 {
     SDL_FRect src = {0,0,current_dialog.text_texture->w,TTF_GetFontLineSkip(font)}, dst = src;
-    dst.x = 250; dst.y = 50;
+    dst.x = 150; dst.y = 50;
     // SDL_Log("render last lines");
     for(int i = 0; i < current_dialog.rendering_line; i++)
     {
@@ -167,7 +194,7 @@ void render_printed_lines()
 void render_current_line()
 {
     SDL_FRect dst = current_dialog.sprite;
-    dst.x = 250;
+    dst.x = 150;
     current_dialog.sprite.y = current_dialog.offset +  current_dialog.rendering_line * TTF_GetFontLineSkip(font);
     dst.y = current_dialog.rendering_line * TTF_GetFontLineSkip(font) + 50;
     render_letter_by_time(&dst);
@@ -178,7 +205,7 @@ void render_current_line()
 void render_arrow()
 {
     SDL_FRect src = {0*MAP_SPRITE_SIZE, 6*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE}, 
-    dst = {250, 3 * TTF_GetFontLineSkip(font) + 50, MAP_CELL_SIZE, MAP_CELL_SIZE};
+    dst = {150, 3 * TTF_GetFontLineSkip(font) + 50, MAP_CELL_SIZE, MAP_CELL_SIZE};
     SDL_RenderTexture(renderer, map_texture, &src, &dst);
 }
 
@@ -223,6 +250,12 @@ void destroy_dialog()
   current_dialog.offset = 0;
   SDL_DestroyTexture(current_dialog.text_texture);
   current_dialog.text_texture = NULL;
+  current_dialog.icon_sprite = NULL;
+  if(current_dialog.callback)
+  {
+    functions[*current_dialog.callback]();
+  }
+  current_dialog.callback = NULL;
 }
 
 void move_dialog_offset()
