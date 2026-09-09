@@ -8,6 +8,7 @@
 #include "../game/actions.h"
 #include "../entities/npc.h"
 #include "SDL3/SDL_log.h"
+#include "SDL3/SDL_stdinc.h"
 
 int clean_heaps(void){
     // SDL_free SDL Stuff
@@ -55,8 +56,15 @@ int clean_heaps(void){
     if(functions) SDL_free(functions);
     functions = NULL;
 
+    if(item_list) SDL_free(item_list);
+    item_list = NULL;
+
+    if(generated_textures) SDL_free(generated_textures);
+    generated_textures = NULL;
+
     if(window) SDL_DestroyWindow(window);
     if(renderer) SDL_DestroyRenderer(renderer);
+
     window = NULL;
     renderer = NULL;
 
