@@ -8,7 +8,8 @@
 #include <string.h>
 
 Items_t *item_list;
-SDL_Texture **generated_textures;
+SDL_Texture **generated_textures = NULL;
+#define INVENTORY_TEXTURE_CAP 40
 
 int init_items()
 {
@@ -94,9 +95,14 @@ static void render_inventory_screen()
 
     char* title = "Inventory";
     SDL_Texture *title_texture = generate_text_texture(title,100);
-    generated_textures[0] = title_texture;
-    dst = (SDL_FRect){150, 150, 100, TTF_GetFontLineSkip(font)};
-    SDL_RenderTexture(renderer, title_texture, NULL, &dst);
+    if(title_texture) {
+        if(generated_textures[0]) SDL_DestroyTexture(generated_textures[0]);
+        generated_textures[0] = title_texture;
+    }
+    if(generated_textures[0]) {
+        dst = (SDL_FRect){150, 150, 100, TTF_GetFontLineSkip(font)};
+        SDL_RenderTexture(renderer, generated_textures[0], NULL, &dst);
+    }
 }
 
 static void render_player_inventory_menu()
@@ -108,16 +114,23 @@ static void render_player_inventory_menu()
         const char* src_text = "there is no items in your inventory!";
         strcpy(menu_text, src_text);
         SDL_Texture *title_texture = generate_text_texture(menu_text,300);
-        generated_textures[1] = title_texture;
-        dst = (SDL_FRect){200, 200, 300, 50};
-        SDL_RenderTexture(renderer, title_texture, NULL, &dst);
+        if(title_texture) {
+            if(generated_textures[1]) SDL_DestroyTexture(generated_textures[1]);
+            generated_textures[1] = title_texture;
+        }
+        if(generated_textures[1]) {
+            dst = (SDL_FRect){200, 200, 300, 50};
+            SDL_RenderTexture(renderer, generated_textures[1], NULL, &dst);
+        }
     }
 }
 
 void render_inventory_menu()
 {
-    generated_textures = SDL_malloc(sizeof(SDL_Texture*) * 40);
-    if(!generated_textures) return;
+    if(!generated_textures) {
+        generated_textures = SDL_calloc(INVENTORY_TEXTURE_CAP, sizeof(SDL_Texture*));
+        if(!generated_textures) return;
+    }
 
    render_inventory_screen();
    render_player_inventory_menu();
@@ -125,6 +138,13 @@ void render_inventory_menu()
 
 void destroy_inventory_textures()
 {
+    if(!generated_textures) return;
+    for(int i = 0; i < INVENTORY_TEXTURE_CAP; i++) {
+        if(generated_textures[i]) {
+            SDL_DestroyTexture(generated_textures[i]);
+            generated_textures[i] = NULL;
+        }
+    }
     SDL_free(generated_textures);
     generated_textures = NULL;
 }
