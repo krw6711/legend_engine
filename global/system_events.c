@@ -29,14 +29,14 @@ void joystick_connecting(SDL_Event *event)
 
 SDL_AppResult general_inputs(SDL_Event *event)
 {
-    if (event->type != SDL_EVENT_KEY_DOWN) return SDL_APP_CONTINUE;
+    if (event->type != SDL_EVENT_KEY_DOWN && event->type != SDL_EVENT_JOYSTICK_BUTTON_DOWN) return SDL_APP_CONTINUE;
 
-    if(event->key.key == SDLK_Q || (event->type == SDL_EVENT_JOYSTICK_BUTTON_DOWN && event->jbutton.button == 0)){
+    if(event->key.key == SDLK_Q || ((int)event->jbutton.button == 0)){
         save_player_status();
         SDL_Log("game statues saved!");
     }
 
-    if(event->key.key == SDLK_F || (event->type == SDL_EVENT_JOYSTICK_BUTTON_DOWN && event->jbutton.button == 8)){
+    if(event->key.key == SDLK_F || ((int)event->jbutton.button == 8)){
         if(fullscreen_mode){
             SDL_SetWindowFullscreen(window,false);
             fullscreen_mode = false;
@@ -46,20 +46,21 @@ SDL_AppResult general_inputs(SDL_Event *event)
         }
     }
 
-    if(event->key.key == SDLK_ESCAPE)
+    if(event->key.key == SDLK_ESCAPE || ((int)event->jbutton.button == 9))
     {
         return SDL_APP_SUCCESS;
     }
-    
+
     return SDL_APP_CONTINUE;
 }
 
 void player_inputs(SDL_Event *event)
 {
     if(current_screen != GAME) return;
-    if (event->type != SDL_EVENT_KEY_DOWN) return;
+    if (event->type != SDL_EVENT_KEY_DOWN && event->type != SDL_EVENT_JOYSTICK_BUTTON_DOWN) return;
 
-    if(event->key.key == SDLK_X || (event->type == SDL_EVENT_JOYSTICK_BUTTON_DOWN && event->jbutton.button == 2)){
+
+    if(event->key.key == SDLK_X || ((int)event->jbutton.button == 2)){
         do_action();
     }
 }
@@ -67,6 +68,7 @@ void player_inputs(SDL_Event *event)
 void inventory_inputs(SDL_Event *event)
 {
     if(current_screen != INVENTORY) return;
+    if (event->type != SDL_EVENT_KEY_DOWN && event->type != SDL_EVENT_JOYSTICK_BUTTON_DOWN) return;
 
     return;
 }
