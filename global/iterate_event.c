@@ -7,7 +7,7 @@
 void joystick_iterate_event(){
     // move up, get close to y = 0
     if (SDL_GetJoystickAxis(joystick, 1) < -30543){
-        SDL_Log("up");
+        // SDL_Log("up");
         // start_moving_camera(UP);
         move_player(UP);
     }
@@ -15,20 +15,20 @@ void joystick_iterate_event(){
     // // move down, get far from y = 0
     if (SDL_GetJoystickAxis(joystick, 1) > 30543)
     {
-        SDL_Log("down");
+        // SDL_Log("down");
         move_player(DOWN);
         // start_moving_camera(DOWN);
     }
     // // move right, get far from x = 0
     if (SDL_GetJoystickAxis(joystick, 0) > 30543){
-        SDL_Log("right");
+        // SDL_Log("right");
         // start_moving_camera(RIGHT);
         move_player(RIGHT);
     }
 
     // // move left, get close to x = 0
     if (SDL_GetJoystickAxis(joystick, 0) < -30543){
-        SDL_Log("left");
+        // SDL_Log("left");
         move_player(LEFT);
         // start_moving_camera(LEFT);
     }
