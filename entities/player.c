@@ -261,14 +261,12 @@ void do_action()
     }else if(new_coord.index >= 0 && new_coord.index < (MAP_COLS * MAP_ROWS)){
         if(map_info[new_coord.index].type == ENTITY && map_info[new_coord.index].id != -1)
         {
-            redner_dialog_by_id(entities[map_info[new_coord.index].id].dialog_id);
+            redner_dialog_by_id(entities[map_info[new_coord.index].id].dialog_id, &entities[map_info[new_coord.index].id].sprite, NULL);
         }
         if(map_info[new_coord.index].type == NPC && map_info[new_coord.index].id != -1)
         {
-            redner_dialog_by_id(npcs[map_info[new_coord.index].id].dialog_id);
-            if(npcs[map_info[new_coord.index].id].callback >= 0){
-                functions[npcs[map_info[new_coord.index].id].callback]();
-            }
+            redner_dialog_by_id(npcs[map_info[new_coord.index].id].dialog_id, &npcs[map_info[new_coord.index].id].sprite, &npcs[map_info[new_coord.index].id].callback);
+            //  functions[npcs[map_info[new_coord.index].id].callback]
         }
     }
     
