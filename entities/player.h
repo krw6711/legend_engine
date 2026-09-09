@@ -16,6 +16,7 @@ typedef struct {
     int EQW; // EQuiped Weapon id
     int EQS; // EQuiped Shield id
     Inventory_t inventory[50];
+    unsigned int inventory_cusor;
     unsigned int index; // player possition
 } Status_t;
 

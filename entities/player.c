@@ -72,6 +72,7 @@ int init_player_struct()
     player->status.EQW = -1;
     player->status.HP = 20;
     player->status.LK = 5;
+    player->status.inventory_cusor = 0;
     player->status.index = player->x + player->y * MAP_ROWS;
 
     return 0;
