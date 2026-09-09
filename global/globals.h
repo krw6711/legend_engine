@@ -46,6 +46,7 @@ extern SDL_AudioStream *music;
 extern SDL_AudioStream *sfx;
 extern TTF_Font *font;
 extern Menu_t current_screen;
+extern bool fullscreen_mode;
 
 char* get_full_path(char* relativePath);
 

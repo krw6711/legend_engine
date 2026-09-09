@@ -7,6 +7,7 @@ SDL_AudioStream *music = NULL;
 SDL_AudioStream *sfx = NULL;
 TTF_Font *font = NULL;
 Menu_t current_screen;
+bool fullscreen_mode = false;
 
 char* get_full_path(char* relativePath)
 {
