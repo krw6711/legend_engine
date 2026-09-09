@@ -4,6 +4,7 @@
 #include "SDL3/SDL_render.h"
 #include "camera.h"
 #include "../entities/entity.h"
+#include "../entities/npc.h"
 
 // Make a large array for map meta info to access later
 Map_cell *map_info = NULL;
@@ -141,11 +142,15 @@ int map_render(void){
         x++;
 
         SDL_RenderTexture(renderer, map_texture, &map_info[index].sprite, &screen_position);
-        if(map_info[index].type != GROUND && map_info[index].id > -1)
+        if(map_info[index].type == ENTITY && map_info[index].id > -1)
         {
             SDL_RenderTexture(renderer, map_texture, &entities[map_info[index].id].sprite , &screen_position);
         }
         
+        if(map_info[index].type == NPC && map_info[index].id > -1)
+        {
+            SDL_RenderTexture(renderer, map_texture, &npcs[map_info[index].id].sprite , &screen_position);
+        }
     }
     return 0;
 }
