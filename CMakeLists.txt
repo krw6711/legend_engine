@@ -56,6 +56,7 @@ add_executable(main WIN32
     ./global/dynamic_array.c 
     ./global/iterate_event.c
     ./global/system_events.c
+    ./global/text.c
 
     ./map/map.c
     ./map/camera.c
