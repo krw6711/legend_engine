@@ -46,12 +46,11 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
     char* font_path = get_full_path("/assets/osifont.ttf");
     if(font_path == NULL) return SDL_APP_FAILURE;
     font = TTF_OpenFont(font_path, font_size);
+    SDL_free(font_path); font_path = NULL;
     if (!font) {
         SDL_Log("Couldn't open font: %s\n", SDL_GetError());
-        SDL_free(font_path); font_path = NULL;
         return SDL_APP_FAILURE;
     }
-    SDL_free(font_path); font_path = NULL;
     
     current_screen = GAME;
     

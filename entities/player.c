@@ -103,9 +103,9 @@ int save_player_status()
     }
 
     FILE *pFile = fopen(save_file_path, "wb+");
+    SDL_free(save_file_path); save_file_path = NULL;
     if(!pFile){
         SDL_Log("error creating save file");
-        SDL_free(save_file_path); save_file_path = NULL;
         return 1;
     }
 
@@ -113,7 +113,6 @@ int save_player_status()
     rewind(pFile);
     fclose(pFile);
 
-    SDL_free(save_file_path); save_file_path = NULL;
     return 0;
 
 }

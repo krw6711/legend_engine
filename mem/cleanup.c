@@ -7,7 +7,6 @@
 #include "../global/dynamic_array.h"
 #include "../game/actions.h"
 #include "../entities/npc.h"
-#include "../entities/items.h"
 #include "SDL3/SDL_log.h"
 #include "SDL3/SDL_stdinc.h"
 
@@ -61,14 +60,15 @@ int clean_heaps(void){
     if(item_list) SDL_free(item_list);
     item_list = NULL;
 
-    destroy_inventory_textures();
+    if(generated_textures) SDL_free(generated_textures);
+    generated_textures = NULL;
 
+    /* SDL3 destroys window/renderer for us after SDL_AppQuit,
+       but keep correct order (renderer before window) here. */
     if(renderer) SDL_DestroyRenderer(renderer);
     renderer = NULL;
     if(window) SDL_DestroyWindow(window);
     window = NULL;
-
-    SDL_Quit();
 
     SDL_Log("cleaned up everything! happy memory free!");
     return 0;
