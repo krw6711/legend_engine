@@ -31,3 +31,7 @@ cmake -S . -B build && cmake --build build
 
 ## Contributions
 By submitting this PR, you agree that your contribution is licensed under GPL-3.0 and that you are the original author (or properly declaring AI assistance if used).
+
+## Dependancies
+- SDL3
+- SDL3_ttf
