@@ -29,5 +29,5 @@ cmake -S . -B build && cmake --build build
 * **Engine License:** The engine source code is licensed under the **GNU General Public License v3.0 (GPL-3.0)**. Any modifications to the engine code must remain open-source under GPL-3.0.
 * **Game Assets & Ownership:** Games, textures, audio, and custom game logic created using this engine are the **sole property of their respective creators**. Using this engine to create games does not force your game assets to be open-source.
 
-### Contributions
+## Contributions
 By submitting this PR, you agree that your contribution is licensed under GPL-3.0 and that you are the original author (or properly declaring AI assistance if used).
