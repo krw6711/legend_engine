@@ -1,0 +1,18 @@
+## Description of Changes
+Brief summary of what this PR does or fixes
+
+## 1. Testing & Validation
+- [ ] **Tested locally:** I have compiled and tested this code on my machine, and it works as expected.
+- [ ] **Untested:** I haven't tested this code locally (please explain why below).
+
+*Details/Notes on testing:* Mention how you tested it or any edge cases to be aware of 
+
+## 2. AI Usage Disclosure
+- [ ] **No AI was used** for this contribution.
+- [ ] **AI was used** for this contribution:
+  - **Model used:**e.g., GPT-4o, Claude 3.5 Sonnet, Copilot, Cursor
+  - **How it was used:**  e.g., Generated boilerplate code, wrote a specific algorithm, refactored existing code
+
+## 3. Copyright & Responsibility Notice
+- [ ] I confirm that this code (whether written by me or generated/assisted by AI) does not violate any third-party copyrights or proprietary licenses. 
+- [ ] I accept full personal responsibility for ensuring the legal originality of this contribution and agree that the project maintainers are held harmless from any copyright claims arising from it.
