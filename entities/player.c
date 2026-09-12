@@ -17,7 +17,6 @@ int get_save_file(char* save_file_path)
 
     if(pFile == NULL){
         SDL_Log("error reading the words file");
-        fclose(pFile);
         return 1;
     }
     
@@ -85,7 +84,6 @@ int creat_save_file(char* save_file_path)
     FILE *pFile = fopen(save_file_path, "wb+");
     if(!pFile){
         SDL_Log("error creating save file");
-        fclose(pFile);
         return 1;
     }
 
@@ -105,9 +103,9 @@ int save_player_status()
     }
 
     FILE *pFile = fopen(save_file_path, "wb+");
+    SDL_free(save_file_path); save_file_path = NULL;
     if(!pFile){
         SDL_Log("error creating save file");
-        fclose(pFile);
         return 1;
     }
 
@@ -115,7 +113,6 @@ int save_player_status()
     rewind(pFile);
     fclose(pFile);
 
-    SDL_free(save_file_path); save_file_path = NULL;
     return 0;
 
 }

@@ -45,6 +45,7 @@ int clean_heaps(void){
 
     if (font) {
         TTF_CloseFont(font);
+        font = NULL;
     }
     TTF_Quit();
     
@@ -62,11 +63,12 @@ int clean_heaps(void){
     if(generated_textures) SDL_free(generated_textures);
     generated_textures = NULL;
 
-    if(window) SDL_DestroyWindow(window);
+    /* SDL3 destroys window/renderer for us after SDL_AppQuit,
+       but keep correct order (renderer before window) here. */
     if(renderer) SDL_DestroyRenderer(renderer);
-
-    window = NULL;
     renderer = NULL;
+    if(window) SDL_DestroyWindow(window);
+    window = NULL;
 
     SDL_Log("cleaned up everything! happy memory free!");
     return 0;
