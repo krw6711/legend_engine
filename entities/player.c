@@ -65,12 +65,22 @@ int init_player_struct()
         MAP_SPRITE_SIZE,
         MAP_SPRITE_SIZE
     };
-    player->status.AT = 5;
-    player->status.DF = 5;
+    
+    player->status.EXP = 0;
+    player->status.LVL = 1;
+
+    player->base.HP = 30;
+    player->base.ATK = 10;
+    player->base.DEF= 10;
+    player->base.LCK = 10;
+
+    player->base.ACC = 5;
+    player->base.EVA = 5;
+    player->base.SPD = 5;
+
     player->status.EQS = -1;
     player->status.EQW = -1;
-    player->status.HP = 20;
-    player->status.LK = 5;
+
     player->status.inventory_cusor = 0;
     player->status.index = player->x + player->y * MAP_ROWS;
 

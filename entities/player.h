@@ -9,16 +9,25 @@
 #define PLAYER_SAVE_FILE_PATH "/save.bin"
 
 typedef struct {
-    int HP; // Health Points
-    int AT; // ATtack
-    int DF; // DeFence
-    int LK; // Luck
+    int HP;  // Health Points
+    // int MP;  // Magic Points
+    int ATK; // ATtaCk
+    int DEF; // DEFence
+    int LCK; // LuCK
+    int ACC; // ACCurcy
+    int EVA; // EVAsion
+    int SPD; // SPeeD
+} Static_Status_t;
+
+typedef struct {
+    int EXP; // EXPerince
+    int LVL; // LeVeL
     int EQW; // EQuiped Weapon id
     int EQS; // EQuiped Shield id
-    Inventory_t inventory[20];
+    Inventory_t inventory[50];
     unsigned int inventory_cusor;
     unsigned int index; // player possition
-} Status_t;
+} Dynamic_Status_t;
 
 typedef struct{
     bool moving;
@@ -34,7 +43,6 @@ typedef struct {
     int count, start_x, start_y;
 } Sprite_t;
 
-
 typedef struct {
     int index, x, y;
 } Coordinates_t;
@@ -45,7 +53,8 @@ typedef struct {
     Sprite_t sprite;
     Movement_t move;
     Face_t face;
-    Status_t status;
+    Static_Status_t base;
+    Dynamic_Status_t status;
 } Player_t;
 
 extern Player_t *player;
