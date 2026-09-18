@@ -139,32 +139,20 @@ void render_dialog_box()
   SDL_FRect dst;
   int h = TTF_GetFontLineSkip(font) * 3 + 100;
   int w = CAMERA_X_CELLS * MAP_CELL_SIZE;
-  SDL_FRect src = {2*MAP_SPRITE_SIZE, 7*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE,MAP_SPRITE_SIZE};
+  SDL_FRect src = {0*MAP_SPRITE_SIZE, 7*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE * 3};
   dst.x = dst.y = 0;
-  dst.w = dst.h = (float)h / 2.0f;
+  dst.w = MAP_CELL_SIZE; dst.h = h;
   SDL_RenderTexture(renderer, map_texture, &src, &dst);
-  dst.y += dst.h;
-  src.x = 3 * MAP_SPRITE_SIZE;
-  SDL_RenderTexture(renderer, map_texture, &src, &dst);
-  dst.y = 0;
-  dst.x = dst.w;
-  src.x = 0;
-  dst.w = w - dst.h * 2;
-  SDL_RenderTexture(renderer, map_texture, &src, &dst);
-  dst.y += dst.h;
-  dst.x = dst.h;
-  src.x = 5 * MAP_SPRITE_SIZE;
-  SDL_RenderTexture(renderer, map_texture, &src, &dst);
-  dst.x = w - dst.h;
+  dst.y = 0; dst.x = dst.w;
   src.x = 1 * MAP_SPRITE_SIZE;
-  dst.y = 0;
-  dst.w = dst.h;
+  dst.w = w - MAP_CELL_SIZE * 2;
   SDL_RenderTexture(renderer, map_texture, &src, &dst);
-  dst.y = dst.h;
-  src.x = 4 * MAP_SPRITE_SIZE;
+  dst.x = w - MAP_CELL_SIZE; dst.y = 0;
+  src.x = 2 * MAP_SPRITE_SIZE;
+  dst.w = MAP_CELL_SIZE; dst.h = h;
   SDL_RenderTexture(renderer, map_texture, &src, &dst);
-  dst.x = dst.y = 25;
-  dst.w = dst.h = 100;
+  dst.x = dst.y = MAP_CELL_SIZE / 2;
+  dst.w = dst.h = 2 * MAP_CELL_SIZE;
   SDL_RenderTexture(renderer, map_texture, current_dialog.icon_sprite, &dst);
 }
 
@@ -186,12 +174,12 @@ void render_letter_by_time(SDL_FRect *dst)
 void render_printed_lines()
 {
     SDL_FRect src = {0,0,current_dialog.text_texture->w,TTF_GetFontLineSkip(font)}, dst = src;
-    dst.x = 150; dst.y = 50;
+    dst.x = 150; dst.y = 25;
     // SDL_Log("render last lines");
     for(int i = 0; i < current_dialog.rendering_line; i++)
     {
         src.y = current_dialog.offset +  i * TTF_GetFontLineSkip(font);
-        dst.y = i * TTF_GetFontLineSkip(font) + 50;
+        dst.y = i * TTF_GetFontLineSkip(font) + 25;
         // SDL_Log("printing the old line %d at y %f, w %f", i,dst.y , dst.w);
         SDL_RenderTexture(renderer, current_dialog.text_texture, &src, &dst);
     }
@@ -202,7 +190,7 @@ void render_current_line()
     SDL_FRect dst = current_dialog.sprite;
     dst.x = 150;
     current_dialog.sprite.y = current_dialog.offset +  current_dialog.rendering_line * TTF_GetFontLineSkip(font);
-    dst.y = current_dialog.rendering_line * TTF_GetFontLineSkip(font) + 50;
+    dst.y = current_dialog.rendering_line * TTF_GetFontLineSkip(font) + 25;
     render_letter_by_time(&dst);
     // SDL_Log("printing current line %d a line at y %f, w %f", current_dialog.rendering_line ,dst.y, dst.w);
     output_dialog(&dst);
@@ -211,7 +199,7 @@ void render_current_line()
 void render_arrow()
 {
     SDL_FRect src = {0*MAP_SPRITE_SIZE, 6*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE}, 
-    dst = {150, 3 * TTF_GetFontLineSkip(font) + 50, MAP_CELL_SIZE, MAP_CELL_SIZE};
+    dst = {150, 3 * TTF_GetFontLineSkip(font) + 45, MAP_CELL_SIZE, MAP_CELL_SIZE};
     SDL_RenderTexture(renderer, map_texture, &src, &dst);
 }
 
