@@ -15,7 +15,7 @@ Content:
 
 ### EXP and LVL
 **Experience Points and Level** 
-- player starts with LVL 0 and EXP 0
+- player starts with LVL 1 and EXP 0
 - this increase by fights and based on the damage you made and the turns
 - gained EXP formula for fights if at least enemy level is half of player level, or **Player's Level is less than 2**
 - if enemy's level is less than the half of the player level
