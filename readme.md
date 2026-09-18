@@ -3,6 +3,8 @@ A lightweight Engine made using [C](https://en.wikipedia.org/wiki/C_(programming
 
 This Engine Relay on Data-Driven Approche, the engine is a binary files to read the assets, but the info of the game wont be just json, this json will be parsed into a "format". this way will make the loading quick and might be hard for modding, unless you know how the parser is working :)
 
+**To learn more about the Engine you can read the [Documentation](./docs/readme.md)**
+
 Do not forget to join our discord server! https://discord.gg/gXJZXGCbX
 
 ## Components
