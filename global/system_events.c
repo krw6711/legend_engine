@@ -1,5 +1,7 @@
 #include "system_events.h"
 #include "../entities/player.h"
+#include "SDL3/SDL_keycode.h"
+#include "SDL3/SDL_log.h"
 #include "globals.h"
 #include "../dialogs/dialogs.h"
 #include "../entities/items.h"
@@ -87,6 +89,24 @@ void inventory_inputs(SDL_Event *event)
             SDL_Log("stop Inventory");
             stop_render_inventory();
         }
+        if(event->key.key == SDLK_UP && current_screen == INVENTORY){
+            change_selection(UP);
+        }
+        if(event->key.key == SDLK_DOWN && current_screen == INVENTORY){
+            change_selection(DOWN);
+        }
+        if(event->key.key == SDLK_RETURN && current_screen == INVENTORY){
+            equip_item();
+            // SDL_Log("Equiped?");
+        }
+        // if(event->key.key == SDLK_C && current_screen == INVENTORY){
+        //     SDL_Log("stop Inventory");
+        //     stop_render_inventory();
+        // }
+        // if(event->key.key == SDLK_C && current_screen == INVENTORY){
+        //     SDL_Log("stop Inventory");
+        //     stop_render_inventory();
+        // }
     }
 
     return;
