@@ -1,10 +1,9 @@
 #include "map.h"
 #include <stdlib.h>
-#include "SDL3/SDL_log.h"
-#include "SDL3/SDL_render.h"
 #include "camera.h"
 #include "../entities/entity.h"
 #include "../entities/npc.h"
+#include "../entities/items.h"
 
 // Make a large array for map meta info to access later
 Map_cell *map_info = NULL;
@@ -101,15 +100,21 @@ void map_load(void){
             id = 1; type = NPC; sx = 4; sy = 4;
         }
         
+        if((x == 50 && y == 55)){
+            id = 2; type = ITEM; sx = 4; sy = 4;
+        }
+
         if(x ==  0 || y == 0 || x == (MAP_ROWS - 1) || y == (MAP_COLS - 1)){
             sx = 2; type = ENTITY; id = 6;
         }
+
+        
 
         map_info[i] = (Map_cell){
             .sprite = {sx*MAP_SPRITE_SIZE, sy*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
             .tile = {(x)*MAP_CELL_SIZE, (y)*MAP_CELL_SIZE, MAP_CELL_SIZE, MAP_CELL_SIZE},
             .type = type,
-            .id = id
+            .id = id,
         };
 
     }
@@ -154,6 +159,10 @@ int map_render(void){
         if(map_info[index].type == NPC && map_info[index].id > -1)
         {
             SDL_RenderTexture(renderer, map_texture, &npcs[map_info[index].id].sprite , &screen_position);
+        }
+
+        if(map_info[index].type == ITEM){
+            SDL_RenderTexture(renderer, map_texture, &item_list[map_info[index].id].sprite , &screen_position);
         }
     }
     return 0;
