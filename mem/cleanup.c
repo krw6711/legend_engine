@@ -7,8 +7,7 @@
 #include "../global/dynamic_array.h"
 #include "../game/actions.h"
 #include "../entities/npc.h"
-#include "SDL3/SDL_log.h"
-#include "SDL3/SDL_stdinc.h"
+#include "../entities/items.h"
 
 int clean_heaps(void){
     // SDL_free SDL Stuff
@@ -29,6 +28,8 @@ int clean_heaps(void){
 
     if(map_texture) SDL_DestroyTexture(map_texture);
     map_texture = NULL;
+    
+    if(generated_textures) clear_generated_textures();
 
     if(save_player_status()) SDL_Log("You lost your progress now you can cry XD");
     if(player) SDL_free(player);
@@ -60,8 +61,6 @@ int clean_heaps(void){
     if(item_list) SDL_free(item_list);
     item_list = NULL;
 
-    if(generated_textures) SDL_free(generated_textures);
-    generated_textures = NULL;
 
     /* SDL3 destroys window/renderer for us after SDL_AppQuit,
        but keep correct order (renderer before window) here. */

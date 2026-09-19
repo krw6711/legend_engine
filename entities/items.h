@@ -2,35 +2,33 @@
 #define ITEMS_H
 
 #include "../global/globals.h"
-#include "SDL3/SDL_render.h"
+#include "./player.h"
 
-typedef enum { KEY, SHIELD, WEAPON, FLAG, UTIL} Items_Types_t;
+typedef enum { EQUIOPMENT, KEY, FLAG, SKILL, POISON} Items_Types_t;
 
 typedef struct {
     Items_Types_t type;
     SDL_FRect sprite;
     char name[64];
     char description[256];
-    int HP; // Health Points
-    int AT; // ATtack
-    int DF; // DeFence
-    int LK; // Luck
+    Static_Status_t status;
     int function_id;
 } Items_t;
-
-typedef struct {
-    unsigned int id;
-    unsigned int amount;
-    bool active;
-} Inventory_t;
 
 extern Items_t *item_list;
 extern SDL_Texture **generated_textures;
 
+static int init_inventory_textures();
+int clear_generated_textures();
 int init_items(void);
+static int generate_no_items();
+static int generate_item_list(char* list_text);
+static int init_inventory_text_textures();
+int start_render_inventory();
+int stop_render_inventory();
 static void render_inventory_screen(void);
 static void render_player_inventory_menu(void);
 void render_inventory_menu(void);
-void destroy_inventory_textures(void);
+int give_item(int id);
 
 #endif
