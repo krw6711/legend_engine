@@ -49,5 +49,6 @@ extern Menu_t current_screen;
 extern bool fullscreen_mode;
 
 char* get_full_path(char* relativePath);
+SDL_Texture* text2texture(char* text, int width, SDL_Color* color);
 
 #endif 
