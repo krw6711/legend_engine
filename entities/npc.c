@@ -17,5 +17,11 @@ int init_npcs()
         .callback = 0
     };
 
+    npcs[1] = (NPC_t){
+        .sprite = { 4 * MAP_SPRITE_SIZE, 8 * MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
+        .dialog_id = 8,
+        .callback = 2
+    };
+
     return 0;
 }

@@ -96,6 +96,10 @@ void map_load(void){
         if((x == 51 && y == 55)){
             id = 0; type = NPC; sx = 4; sy = 4;
         }
+
+        if((x == 60 && y == 55)){
+            id = 1; type = NPC; sx = 4; sy = 4;
+        }
         
         if(x ==  0 || y == 0 || x == (MAP_ROWS - 1) || y == (MAP_COLS - 1)){
             sx = 2; type = ENTITY; id = 6;
