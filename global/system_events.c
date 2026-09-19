@@ -2,6 +2,7 @@
 #include "../entities/player.h"
 #include "globals.h"
 #include "../dialogs/dialogs.h"
+#include "../entities/items.h"
 
 void joystick_connecting(SDL_Event *event)
 {
@@ -51,9 +52,9 @@ SDL_AppResult general_inputs(SDL_Event *event)
     return SDL_APP_CONTINUE;
 }
 
-void player_inputs(SDL_Event *event)
+int player_inputs(SDL_Event *event)
 {
-    if(current_screen != GAME) return;
+    if(current_screen != GAME) return 0;
     
     if(event->type == SDL_EVENT_JOYSTICK_BUTTON_DOWN){
         if(((int)event->jbutton.button == 2)){
@@ -67,9 +68,13 @@ void player_inputs(SDL_Event *event)
         }
         if(event->key.key == SDLK_Z && current_screen == GAME && !current_dialog.rendering){
             SDL_Log("Start Inventory");
-            current_screen = INVENTORY;
+            if(start_render_inventory()){
+                return 1;
+            }
         }
     }
+
+    return 0;
 }
 
 void inventory_inputs(SDL_Event *event)
@@ -80,8 +85,7 @@ void inventory_inputs(SDL_Event *event)
     if(event->type == SDL_EVENT_KEY_DOWN){
         if(event->key.key == SDLK_C && current_screen == INVENTORY){
             SDL_Log("stop Inventory");
-            destroy_inventory_textures();
-            current_screen = GAME;
+            stop_render_inventory();
         }
     }
 

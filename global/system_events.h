@@ -5,7 +5,7 @@
 
 void joystick_connecting(SDL_Event *event);
 SDL_AppResult general_inputs(SDL_Event *event);
-void player_inputs(SDL_Event *event);
+int player_inputs(SDL_Event *event);
 void inventory_inputs(SDL_Event *event);
 
 #endif
