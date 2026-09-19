@@ -1,11 +1,12 @@
 #include "dialogs.h"
 #include "../global/globals.h"
 #include "../map/map.h"
-#include "SDL3/SDL_rect.h"
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include "../game/actions.h"
+#include "SDL3/SDL_log.h"
+#include "SDL3/SDL_stdinc.h"
 
 char *dialogs;
 static long file_length;
@@ -49,7 +50,9 @@ int init_dialogs(void) {
                          .rendering_line = 0,
                          .last_time = (float)SDL_GetTicks() / 1000.0f,
                          .is_end_page = false,
-                         .offset = 0};
+                         .offset = 0,
+                         .callback = -1
+                        };
 
   return 0;
 }
@@ -81,57 +84,70 @@ int get_dialog_length_by_cursor(int cursor) {
   return len;
 }
 
-int redner_dialog_by_id(int id, SDL_FRect *icon_sprite, int* callback) {
-  int cursor = get_dialog_cursor_by_id(id);
-  if (cursor == -1)
-    return 1;
+int get_dialog_len_by_id(int id)
+{
+    int cursor = get_dialog_cursor_by_id(id);
+    if (cursor == -1) return 0;
+    
+    int len = get_dialog_length_by_cursor(cursor);
+    if (len == -1) return 0;
+    
+    return len;
+}
 
-  int len = get_dialog_length_by_cursor(cursor);
-  if (len == -1)
-    return 1;
+int load_dialog_from_file(int id, char* text)
+{
+    int cursor = get_dialog_cursor_by_id(id);
+    if (cursor == -1) return 0;
+    
+    int len = get_dialog_length_by_cursor(cursor);
+    if (len == -1) return 0;
+    
+    // char* dialog = SDL_calloc(sizeof(char), len + 1);
 
-  char dialog[len + 1];
-  for (int i = 0; i < len; i++) {
-    dialog[i] = dialogs[i + cursor];
-  }
-  dialog[len] = '\0';
+    for (int i = 0; i < len; i++) {
+        text[i] = dialogs[i + cursor];
+    }
+    text[len] = '\0';
 
-//   SDL_Log("dialog: %s", dialog);
+    // SDL_Log("from file: %s", text);
+    // return dialog;
+    return len;
+}
 
-  SDL_Color color = {255, 255, 255, SDL_ALPHA_OPAQUE};
-  SDL_Surface *text;
+int redner_dialog_by_id(int id, SDL_FRect *icon_sprite, int callback, char* text)
+{
+    int len;
+    if(id >= 0 && !text)
+    {
+        len = get_dialog_len_by_id(id) + 1;
+    }else{
+        len = SDL_strlen(text) + 1;
+    }
+    char dialog[len];
 
-  text = TTF_RenderText_Blended_Wrapped(font, dialog, 0, color, DIALOG_WIDTH);
-  if (!text) {
-    SDL_Log("Couldn't create text: %s\n", SDL_GetError());
-    return 1;
-  }
-  SDL_Texture *new_texture = SDL_CreateTextureFromSurface(renderer, text);
-  SDL_DestroySurface(text);
-  if (!new_texture) {
-    SDL_Log("Couldn't create text: %s\n", SDL_GetError());
-    return 1;
-  }
-  if (current_dialog.text_texture) {
-    SDL_DestroyTexture(current_dialog.text_texture);
-  }
-  current_dialog.text_texture = new_texture;
+    if(id >= 0) load_dialog_from_file(id, dialog);
+    if(text) SDL_strlcpy(dialog, text, len);
 
-  if (icon_sprite) current_dialog.rendering = true;
-  if (callback) current_dialog.callback = callback;
-//   if ((current_dialog.sprite.y + current_dialog.sprite.h) >=
-//       current_dialog.text_texture->h) {
-//     current_dialog.is_end = true;
-//   }
-  current_dialog.icon_sprite = icon_sprite;
+    SDL_Texture* new_texture = text2texture(dialog, DIALOG_WIDTH, NULL);
 
-  current_dialog.sprite = (SDL_FRect){
-      .x = 0,
-      .y = 0,
-      .w = 0,
-      .h = TTF_GetFontLineSkip(font),
-  };
-  return 0;
+    if (current_dialog.text_texture) {
+        SDL_DestroyTexture(current_dialog.text_texture);
+    }
+    current_dialog.text_texture = new_texture;
+
+    if (icon_sprite) current_dialog.rendering = true;
+    if (callback != -1) current_dialog.callback = callback;
+
+    current_dialog.icon_sprite = icon_sprite;
+
+    current_dialog.sprite = (SDL_FRect){
+        .x = 0,
+        .y = 0,
+        .w = 0,
+        .h = TTF_GetFontLineSkip(font),
+    };
+    return 0;
 }
 
 void render_dialog_box()
@@ -151,7 +167,7 @@ void render_dialog_box()
   src.x = 2 * MAP_SPRITE_SIZE;
   dst.w = MAP_CELL_SIZE; dst.h = h;
   SDL_RenderTexture(renderer, map_texture, &src, &dst);
-  dst.x = dst.y = MAP_CELL_SIZE / 2;
+  dst.x = dst.y = (int)MAP_CELL_SIZE / 2;
   dst.w = dst.h = 2 * MAP_CELL_SIZE;
   SDL_RenderTexture(renderer, map_texture, current_dialog.icon_sprite, &dst);
 }
@@ -236,20 +252,22 @@ void render_current_dialog()
 
 void destroy_dialog()
 {
-  current_dialog.rendering = false;
-  current_dialog.is_end = false;
-  current_dialog.sprite = (SDL_FRect){0, 0, 0, 0};
-  current_dialog.is_end_page = false;
-  current_dialog.rendering_line = 0;
-  current_dialog.offset = 0;
-  SDL_DestroyTexture(current_dialog.text_texture);
-  current_dialog.text_texture = NULL;
-  current_dialog.icon_sprite = NULL;
-  if(current_dialog.callback)
-  {
-    functions[*current_dialog.callback]();
-  }
-  current_dialog.callback = NULL;
+    current_dialog.rendering = false;
+    current_dialog.is_end = false;
+    current_dialog.sprite = (SDL_FRect){0, 0, 0, 0};
+    current_dialog.is_end_page = false;
+    current_dialog.rendering_line = 0;
+    current_dialog.offset = 0;
+    SDL_DestroyTexture(current_dialog.text_texture);
+    current_dialog.text_texture = NULL;
+    current_dialog.icon_sprite = NULL;
+
+    int callback = current_dialog.callback; 
+    current_dialog.callback = -1;
+    
+    if(callback != -1){
+        functions[callback]();
+    }
 }
 
 void move_dialog_offset()
