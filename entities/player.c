@@ -5,9 +5,11 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include "../dialogs/dialogs.h"
+#include "SDL3/SDL_stdinc.h"
 #include "entity.h"
 #include "./npc.h"
 #include "../game/actions.h"
+#include "items.h"
 
 Player_t *player = NULL;
 
@@ -268,13 +270,15 @@ void do_action()
     }else if(new_coord.index >= 0 && new_coord.index < (MAP_COLS * MAP_ROWS)){
         if(map_info[new_coord.index].type == ENTITY && map_info[new_coord.index].id != -1)
         {
-            redner_dialog_by_id(entities[map_info[new_coord.index].id].dialog_id, &entities[map_info[new_coord.index].id].sprite, NULL);
+            redner_dialog_by_id(entities[map_info[new_coord.index].id].dialog_id, &entities[map_info[new_coord.index].id].sprite, -1, NULL);
         }
         if(map_info[new_coord.index].type == NPC && map_info[new_coord.index].id != -1)
         {
-            redner_dialog_by_id(npcs[map_info[new_coord.index].id].dialog_id, &npcs[map_info[new_coord.index].id].sprite, &npcs[map_info[new_coord.index].id].callback);
+            redner_dialog_by_id(npcs[map_info[new_coord.index].id].dialog_id, &npcs[map_info[new_coord.index].id].sprite, npcs[map_info[new_coord.index].id].callback, NULL);
             //  functions[npcs[map_info[new_coord.index].id].callback]
         }
+    // }else{
+        // char* text = "Hello World!";
+        // redner_dialog_by_id(0, &item_list[0].sprite, NULL, text, SDL_strlen(text));
     }
-    
 }

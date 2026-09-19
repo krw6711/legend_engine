@@ -2,9 +2,7 @@
 #define PLAYER_H
 
 #include "../global/globals.h"
-#include "SDL3/SDL_rect.h"
 #include <stdbool.h>
-#include "./items.h"
 
 #define PLAYER_SAVE_FILE_PATH "/save.bin"
 
@@ -18,6 +16,12 @@ typedef struct {
     int EVA; // EVAsion
     int SPD; // SPeeD
 } Static_Status_t;
+
+typedef struct {
+    unsigned int id;
+    unsigned int amount;
+    bool active;
+} Inventory_t;
 
 typedef struct {
     int EXP; // EXPerince
