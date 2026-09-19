@@ -5,6 +5,7 @@
 
 #include "./map/map.h"
 
+#include "SDL3/SDL_init.h"
 #include "entities/items.h"
 #include "entities/npc.h"
 #include "entities/player.h"
@@ -77,7 +78,9 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
 
     joystick_connecting(event);
     inventory_inputs(event);
-    player_inputs(event);
+    if(player_inputs(event)){
+        return SDL_APP_FAILURE;
+    }
     
     return general_inputs(event);
 
