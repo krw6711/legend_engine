@@ -4,11 +4,10 @@
 #include "../physics/velocity.h"
 #include <stdbool.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "../dialogs/dialogs.h"
-#include "SDL3/SDL_stdinc.h"
 #include "entity.h"
 #include "./npc.h"
-#include "../game/actions.h"
 #include "items.h"
 
 Player_t *player = NULL;
@@ -276,6 +275,11 @@ void do_action()
         {
             redner_dialog_by_id(npcs[map_info[new_coord.index].id].dialog_id, &npcs[map_info[new_coord.index].id].sprite, npcs[map_info[new_coord.index].id].callback, NULL);
             //  functions[npcs[map_info[new_coord.index].id].callback]
+        }
+        if(map_info[new_coord.index].type == ITEM)
+        {
+            give_item(map_info[new_coord.index].id);
+            map_info[new_coord.index].type = GROUND;
         }
     // }else{
         // char* text = "Hello World!";

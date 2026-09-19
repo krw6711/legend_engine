@@ -8,7 +8,6 @@ typedef struct {
 } Entity_t;
 
 extern Entity_t *entities;
-
 int init_entites();
 
 #endif
