@@ -72,6 +72,8 @@ add_executable(main WIN32
     ./game/actions.c
     ./game/custom_actions.c
     ./game/gameloop.c
+
+    ./audio/audio.c
 )
 
 # target_compile_options(main PRIVATE -fsanitize=address -g)

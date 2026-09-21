@@ -5,8 +5,12 @@
 SDL_Window *window = NULL;
 SDL_Renderer *renderer = NULL;
 SDL_Joystick *joystick = NULL;
+
+SDL_AudioSpec spec;
 SDL_AudioStream *music = NULL;
 SDL_AudioStream *sfx = NULL;
+Wav_file_t *wav_data = NULL;
+
 TTF_Font *font = NULL;
 Menu_t current_screen;
 bool fullscreen_mode = false;

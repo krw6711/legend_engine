@@ -39,11 +39,21 @@ typedef enum {
     NONE=4
 }Face_t;
 
+typedef struct {
+    Uint8 *wav_data;
+    Uint32 wav_data_len;
+    SDL_AudioSpec spec; 
+} Wav_file_t;
+
 extern SDL_Window *window;
 extern SDL_Renderer *renderer;
 extern SDL_Joystick *joystick;
+
 extern SDL_AudioStream *music;
 extern SDL_AudioStream *sfx;
+extern SDL_AudioSpec spec;
+extern Wav_file_t *wav_data;
+
 extern TTF_Font *font;
 extern Menu_t current_screen;
 extern bool fullscreen_mode;

@@ -8,16 +8,10 @@
 #include "../game/actions.h"
 #include "../entities/npc.h"
 #include "../entities/items.h"
+#include "../audio/audio.h"
 
 int clean_heaps(void){
     // SDL_free SDL Stuff
-    if(music){
-        SDL_DestroyAudioStream(music);
-    }
-    if(sfx) SDL_DestroyAudioStream(sfx);
-    
-    music = NULL;
-    sfx = NULL;
 
     if(joystick) SDL_CloseJoystick(joystick);
     joystick = NULL;
@@ -61,6 +55,7 @@ int clean_heaps(void){
     if(item_list) SDL_free(item_list);
     item_list = NULL;
 
+    cleanup_audio();
 
     /* SDL3 destroys window/renderer for us after SDL_AppQuit,
        but keep correct order (renderer before window) here. */
