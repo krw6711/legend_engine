@@ -5,10 +5,15 @@
 
 #include "../map/map.h"
 #include "../map/camera.h"
+
 #include "../dialogs/dialogs.h"
+
 #include "../entities/player.h"
 #include "../entities/items.h"
+
 #include "../physics/velocity.h"
+
+#include "../audio/audio.h"
 
 void current_rendering_screen()
 {
@@ -64,6 +69,9 @@ static void game()
 
     // render dialogs
     render_current_dialog();
+
+    // play music
+    play_music(0);
 }
 
 static void inventory()

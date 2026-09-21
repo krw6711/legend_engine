@@ -10,6 +10,8 @@
 #include "./npc.h"
 #include "items.h"
 
+#include "../audio/audio.h"
+
 Player_t *player = NULL;
 
 int get_save_file(char* save_file_path)
@@ -279,6 +281,7 @@ void do_action()
         if(map_info[new_coord.index].type == ITEM)
         {
             give_item(map_info[new_coord.index].id);
+            play_sfx(2);
             map_info[new_coord.index].type = GROUND;
         }
     // }else{

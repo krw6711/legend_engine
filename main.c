@@ -1,9 +1,10 @@
-#include "./global/globals.h"
-#include "./global/system_events.h"
+#include "SDL3/SDL_audio.h"
+#include "global/globals.h"
+#include "global/system_events.h"
 
-#include "./mem/cleanup.h"
+#include "mem/cleanup.h"
 
-#include "./map/map.h"
+#include "map/map.h"
 
 #include "SDL3/SDL_init.h"
 #include "entities/items.h"
@@ -14,7 +15,9 @@
 #include "dialogs/dialogs.h"
 
 #include "game/actions.h"
-#include "./game/gameloop.h"
+#include "game/gameloop.h"
+
+#include "audio/audio.h"
 
 #define SDL_MAIN_USE_CALLBACKS 1  /* use the callbacks instead of main() */
 #include <SDL3/SDL_main.h>
@@ -66,6 +69,11 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
     if(init_functions()) return SDL_APP_FAILURE;
 
     if(init_items()) return SDL_APP_FAILURE;
+
+    if(init_audio_files()) return SDL_APP_FAILURE;
+    if(init_stearms()) return SDL_APP_FAILURE;
+
+    SDL_SetAudioStreamGain(music, 1.0f);
 
     return SDL_APP_CONTINUE;  /* carry on with the program! */
 }

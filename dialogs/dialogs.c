@@ -5,8 +5,8 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include "../game/actions.h"
-#include "SDL3/SDL_log.h"
-#include "SDL3/SDL_stdinc.h"
+
+#include "../audio/audio.h"
 
 char *dialogs;
 static long file_length;
@@ -147,6 +147,8 @@ int redner_dialog_by_id(int id, SDL_FRect *icon_sprite, int callback, char* text
         .w = 0,
         .h = TTF_GetFontLineSkip(font),
     };
+
+    play_sfx(3);
     return 0;
 }
 

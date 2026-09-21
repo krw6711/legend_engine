@@ -2,14 +2,11 @@
 #include "../global/globals.h"
 #include "../map/map.h"
 #include "../dialogs/dialogs.h"
-#include "SDL3/SDL_log.h"
-#include "SDL3/SDL_rect.h"
-#include "SDL3/SDL_render.h"
-#include "SDL3/SDL_stdinc.h"
-#include "SDL3_ttf/SDL_ttf.h"
 #include "player.h"
 #include <stdlib.h>
 #include <string.h>
+
+#include "../audio/audio.h"
 
 Items_t *item_list;
 SDL_Texture **generated_textures;
@@ -162,6 +159,7 @@ void equip_item()
             player->status.EQS = -1;
         }
     }
+    play_sfx(2);
     init_details_textures();
 }
 
@@ -194,6 +192,7 @@ static int init_inventory_text_textures()
 
 int start_render_inventory()
 {
+    play_sfx(1);
     if(init_inventory_textures()) {
         SDL_Log("failed to allocate textures pool");    
         return 1;
@@ -207,6 +206,7 @@ int start_render_inventory()
 
 int stop_render_inventory()
 {
+    play_sfx(3);
     current_screen = GAME;
     if(clear_generated_textures()) {
         SDL_Log("failed to free textures pool");    
@@ -225,6 +225,7 @@ static void render_inventory_screen()
 
 void change_selection(Face_t dir)
 {
+    play_sfx(2);
     switch (dir) {
         case UP:
             if(selection - 1 >= 0) selection--;
