@@ -1,6 +1,15 @@
 cmake_minimum_required(VERSION 3.16)
 project(TheLegendEngine2D)
 
+option(CROSS_COMPILE_WINDOWS "Build for Windows using mingw-w64" OFF)
+
+if(CROSS_COMPILE_WINDOWS)
+    set(CMAKE_SYSTEM_NAME Windows)
+    set(CMAKE_C_COMPILER x86_64-w64-mingw32-gcc)
+    set(CMAKE_CXX_COMPILER x86_64-w64-mingw32-g++)
+    set(CMAKE_RC_COMPILER x86_64-w64-mingw32-windres)
+endif()
+
 # include(CTest)
 # find_program(MEMORYCHECK_COMMAND valgrind)
 
@@ -93,3 +102,13 @@ add_custom_command(
     COMMENT "Copying assets"
     VERBATIM
 )
+if(CROSS_COMPILE_WINDOWS)
+    add_custom_command(
+        TARGET main POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            $<TARGET_RUNTIME_DLLS:main>
+            $<TARGET_FILE_DIR:main>
+        COMMENT "Copying Windows DLLs"
+        COMMAND_EXPAND_LISTS
+    )
+endif()

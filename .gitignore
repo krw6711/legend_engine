@@ -3,3 +3,5 @@ vendored
 .cache
 .vscode
 logs.txt
+build-windows
+releases

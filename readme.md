@@ -22,6 +22,14 @@ Do not forget to join our discord server! https://discord.gg/gXJZXGCbX
 ```sh
 cmake -S . -B build && cmake --build build
 ```
+- *for windows uses:*
+```cmd
+cmake -S . -B build-windows \
+  -DCMAKE_TOOLCHAIN_FILE=toolchain-windows.cmake \
+  -DCMAKE_BUILD_TYPE=Release
+
+cmake --build build-windows
+```
 - you can find the build in `build/Debug/main`
 
 ## resources
