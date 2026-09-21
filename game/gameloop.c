@@ -10,6 +10,7 @@
 
 #include "../entities/player.h"
 #include "../entities/items.h"
+#include "../entities/boss.h"
 
 #include "../physics/velocity.h"
 
@@ -38,6 +39,10 @@ void current_rendering_screen()
         case PLAYER_STATUS:
             player_statues();
             break;
+        
+        case FIGHT:
+            generate_info(0);
+            render_battel(0);
     }
 }
 

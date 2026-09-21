@@ -29,7 +29,7 @@
 #include <unistd.h>
 #endif
 
-typedef enum { TILE_SCREEN, OPTIONS, GAME, INVENTORY, PLAYER_STATUS } Menu_t;
+typedef enum { FIGHT, TILE_SCREEN, OPTIONS, GAME, INVENTORY, PLAYER_STATUS } Menu_t;
 
 typedef enum {
     UP=1,

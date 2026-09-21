@@ -8,7 +8,9 @@
 #include "../game/actions.h"
 #include "../entities/npc.h"
 #include "../entities/items.h"
+#include "../entities/boss.h"
 #include "../audio/audio.h"
+#include "SDL3/SDL_stdinc.h"
 
 int clean_heaps(void){
     // SDL_free SDL Stuff
@@ -57,6 +59,9 @@ int clean_heaps(void){
 
     cleanup_audio();
 
+    if(bosses) SDL_free(bosses);
+    bosses = NULL;
+    
     /* SDL3 destroys window/renderer for us after SDL_AppQuit,
        but keep correct order (renderer before window) here. */
     if(renderer) SDL_DestroyRenderer(renderer);

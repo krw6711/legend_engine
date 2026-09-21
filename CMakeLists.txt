@@ -66,6 +66,7 @@ add_executable(main WIN32
     ./entities/entity.c
     ./entities/npc.c
     ./entities/items.c
+    ./entities/boss.c
 
     ./dialogs/dialogs.c
 

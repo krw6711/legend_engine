@@ -81,6 +81,8 @@ int init_player_struct()
     player->base.EVA = 5;
     player->base.SPD = 5;
 
+    player->status.CHP = 30;
+
     player->status.EQS = -1;
     player->status.EQW = -1;
 
@@ -283,6 +285,12 @@ void do_action()
             give_item(map_info[new_coord.index].id);
             play_sfx(2);
             map_info[new_coord.index].type = GROUND;
+        }
+        if(map_info[new_coord.index].type == BOSS)
+        {
+            play_sfx(2);
+            // map_info[new_coord.index].type = GROUND;
+            current_screen = FIGHT;
         }
     // }else{
         // char* text = "Hello World!";

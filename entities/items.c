@@ -42,7 +42,7 @@ int init_items()
 {
     item_list = SDL_malloc(sizeof(Items_t) * 5);
     if(!item_list) return 1;
-    Static_Status_t example = {0, 0, 0, 0, 0, 0, 0};
+    Static_Status_t example = {0};
 
     item_list[0] = (Items_t){
         .type = KEY,
@@ -58,7 +58,7 @@ int init_items()
         .name = "great sowrd\n",
         .description = "sowrd increase your attack and luck",
         .function_id = -1,
-        .status = example,
+        .status = {0, 5, 0, 0, 0, 0, 0},
         .sprite = { 3 * MAP_SPRITE_SIZE, 8 * MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE}
     };
 
@@ -67,7 +67,7 @@ int init_items()
         .name = "wierd Shield\n",
         .description = "a shield that have magic effect on your HP",
         .function_id = -1,
-        .status = example,
+        .status = {0, 0, 5, 0, 0, 0, 0},
         .sprite = { 5 * MAP_SPRITE_SIZE, 7 * MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE}
     };
 

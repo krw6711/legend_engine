@@ -5,6 +5,7 @@
 #include "globals.h"
 #include "../dialogs/dialogs.h"
 #include "../entities/items.h"
+#include "../entities/boss.h"
 
 void joystick_connecting(SDL_Event *event)
 {
@@ -110,4 +111,16 @@ void inventory_inputs(SDL_Event *event)
     }
 
     return;
+}
+
+void fight_input(SDL_Event *event)
+{
+    if(current_screen != FIGHT) return;
+    if (event->type != SDL_EVENT_KEY_DOWN && event->type != SDL_EVENT_JOYSTICK_BUTTON_DOWN) return;
+        if(event->type == SDL_EVENT_KEY_DOWN){
+            if(event->key.key == SDLK_SPACE && current_screen == FIGHT && !current_dialog.rendering){
+                SDL_Log("do fight");
+                fight(1);
+        }
+    }
 }

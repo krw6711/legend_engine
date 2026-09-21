@@ -4,6 +4,7 @@
 #include "../entities/entity.h"
 #include "../entities/npc.h"
 #include "../entities/items.h"
+#include "../entities/boss.h"
 
 // Make a large array for map meta info to access later
 Map_cell *map_info = NULL;
@@ -104,12 +105,16 @@ void map_load(void){
             id = 2; type = ITEM; sx = 4; sy = 4;
         }
 
+        if((x == 50 && y == 45)){
+            id = 0; type = BOSS; sx = 4; sy = 4;
+        }
+
+
         if(x ==  0 || y == 0 || x == (MAP_ROWS - 1) || y == (MAP_COLS - 1)){
             sx = 2; type = ENTITY; id = 6;
         }
 
         
-
         map_info[i] = (Map_cell){
             .sprite = {sx*MAP_SPRITE_SIZE, sy*MAP_SPRITE_SIZE, MAP_SPRITE_SIZE, MAP_SPRITE_SIZE},
             .tile = {(x)*MAP_CELL_SIZE, (y)*MAP_CELL_SIZE, MAP_CELL_SIZE, MAP_CELL_SIZE},
@@ -163,6 +168,10 @@ int map_render(void){
 
         if(map_info[index].type == ITEM){
             SDL_RenderTexture(renderer, map_texture, &item_list[map_info[index].id].sprite , &screen_position);
+        }
+
+        if(map_info[index].type == BOSS){
+            SDL_RenderTexture(renderer, map_texture, &bosses[map_info[index].id].sprite , &screen_position);
         }
     }
     return 0;
