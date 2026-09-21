@@ -26,7 +26,8 @@ cmake -S . -B build && cmake --build build
 
 ## resources
 - map srpitesheet: I really forgot where I got them but I appreciat these artists work, they did really greate! I pulled them from itcho.io and another one I can not remember XD
-
+- Music: https://boris-sandor.itch.io/kings-and-heroes-rpg-themes-1
+- sfx: https://leohpaz.itch.io/rpg-essentials-sfx-free
 ## Licensing & Assets
 * **Engine License:** The engine source code is licensed under the **GNU General Public License v3.0 (GPL-3.0)**. Any modifications to the engine code must remain open-source under GPL-3.0.
 * **Game Assets & Ownership:** Games, textures, audio, and custom game logic created using this engine are the **sole property of their respective creators**. Using this engine to create games does not force your game assets to be open-source.
