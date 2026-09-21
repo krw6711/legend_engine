@@ -18,6 +18,7 @@ Do not forget to join our discord server! https://discord.gg/gXJZXGCbX
     - CMake
     - Git
     - Build Essentials (make, ninja, etc...)
+    - gcc-mingw-w64-x86-64 for cross-compiler for windows
 - clone this project and run cmake in the repo's directory
 ```sh
 cmake -S . -B build && cmake --build build
