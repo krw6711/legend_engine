@@ -1,3 +1,4 @@
+# Project moved to my main github account on: (https://github.com/mohamedsaleh077/legend_engin/)[https://github.com/mohamedsaleh077/legend_engine]
 # Legend Engine
 A lightweight Engine made using [C](https://en.wikipedia.org/wiki/C_(programming_language)) and [SDL3](https://wiki.libsdl.org/SDL3/FrontPage). This Engine made for [RPG Games](https://en.wikipedia.org/wiki/Role-playing_game) and [Action Adventure](https://en.wikipedia.org/wiki/Action-adventure_game) later with [Tile Map style](https://en.wikipedia.org/wiki/Tile-based_video_game) and [Turn based fights](https://en.wikipedia.org/wiki/Turn-based_role-playing_game). This Game  Engine inspired by **Nintendo's Classic Library** like [The Legend of Zelda](https://en.wikipedia.org/wiki/The_Legend_of_Zelda), [Pokemon](https://en.wikipedia.org/wiki/Pok%C3%A9mon) and [Final Fantsy I](https://en.wikipedia.org/wiki/Pok%C3%A9mon)
 
